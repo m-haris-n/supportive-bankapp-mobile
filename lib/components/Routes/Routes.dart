@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:supportive_app/AuthPages/LoginPage.dart';
+import 'package:supportive_app/ChatListPage/ChatListPage.dart';
 
 import '../../AuthPages/SignupPage/SignupPage.dart';
 import '../../Constants/RouteConstants/RouteConstants.dart';
@@ -20,6 +21,9 @@ class RouteGenerator {
       case RouteConstants.signupPageRoute:
         return PageTransition(
             child: const SignupPage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstants.chatListPage:
+        return PageTransition(
+            child: const ChatListPage(), type: PageTransitionType.fade, duration: animationDuration);
 
       default:
         return _errorRoute();

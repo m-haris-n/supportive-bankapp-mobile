@@ -73,7 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                       title: "Sign in",
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      onPress: (){},
+                      onPress: (){
+                        Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.chatListPage, (route)=>false);
+                      },
                     ),
                     Padding(
                       padding:  EdgeInsets.symmetric(vertical: 20.h),
@@ -86,7 +88,10 @@ class _LoginPageState extends State<LoginPage> {
                       btnColor: ColorConstants.whiteColor,
                       textColor: ColorConstants.blackColor,
                       btnIcon: Image.asset(AssetConstants.plaidImage,height: 20.h,),
-                      onPress: (){},
+                      onPress: (){
+                        Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.chatListPage, (route)=>false);
+
+                      },
                     ),
           
           
