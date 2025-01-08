@@ -77,22 +77,22 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.chatListPage, (route)=>false);
                       },
                     ),
-                    Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 20.h),
-                      child: Center(child: Text("Or Sign in with",style: AppTextStyle.poppinsLightStyle,)),
-                    ),
-                    CustomAppButton(
-                      title: "Plaid",
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      btnColor: ColorConstants.whiteColor,
-                      textColor: ColorConstants.blackColor,
-                      btnIcon: Image.asset(AssetConstants.plaidImage,height: 20.h,),
-                      onPress: (){
-                        Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.chatListPage, (route)=>false);
-
-                      },
-                    ),
+                    // Padding(
+                    //   padding:  EdgeInsets.symmetric(vertical: 20.h),
+                    //   child: Center(child: Text("Or Sign in with",style: AppTextStyle.poppinsLightStyle,)),
+                    // ),
+                    // CustomAppButton(
+                    //   title: "Plaid",
+                    //   fontSize: 14.sp,
+                    //   fontWeight: FontWeight.w500,
+                    //   btnColor: ColorConstants.whiteColor,
+                    //   textColor: ColorConstants.blackColor,
+                    //   btnIcon: Image.asset(AssetConstants.plaidImage,height: 20.h,),
+                    //   onPress: (){
+                    //     Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.chatListPage, (route)=>false);
+                    //
+                    //   },
+                    // ),
           
           
                   ],

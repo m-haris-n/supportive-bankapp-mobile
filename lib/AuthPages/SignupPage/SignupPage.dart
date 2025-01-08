@@ -30,7 +30,7 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Sign UP",style: AppTextStyle.poppinsBoldStyle),
+                    Text("Sign up",style: AppTextStyle.poppinsBoldStyle),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,19 +88,19 @@ class _SignupPageState extends State<SignupPage> {
                         onPress: (){},
                       ),
                     ),
-                    Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 20.h),
-                      child: Center(child: Text("Or Sign up with",style: AppTextStyle.poppinsLightStyle,)),
-                    ),
-                    CustomAppButton(
-                      title: "Plaid",
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      btnColor: ColorConstants.whiteColor,
-                      textColor: ColorConstants.blackColor,
-                      btnIcon: Image.asset(AssetConstants.plaidImage,height: 20.h,),
-                      onPress: (){},
-                    ),
+                    // Padding(
+                    //   padding:  EdgeInsets.symmetric(vertical: 20.h),
+                    //   child: Center(child: Text("Or Sign up with",style: AppTextStyle.poppinsLightStyle,)),
+                    // ),
+                    // CustomAppButton(
+                    //   title: "Plaid",
+                    //   fontSize: 14.sp,
+                    //   fontWeight: FontWeight.w500,
+                    //   btnColor: ColorConstants.whiteColor,
+                    //   textColor: ColorConstants.blackColor,
+                    //   btnIcon: Image.asset(AssetConstants.plaidImage,height: 20.h,),
+                    //   onPress: (){},
+                    // ),
 
 
                   ],
