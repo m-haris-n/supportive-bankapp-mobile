@@ -13,4 +13,6 @@ class AssetConstants {
   static const pinIcon = "assets/Icons/pin_icon.svg";
   static const celebrationIcon = "assets/Icons/celebration_icon.svg";
   static const sendChatIcon = "assets/Icons/send_chat_icon.svg";
+  static const changePasswordIcon = "assets/Icons/change_password_icon.svg";
+  static const emailIcon = "assets/Icons/email_icon.svg";
 }

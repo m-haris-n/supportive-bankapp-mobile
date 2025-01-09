@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:supportive_app/AuthPages/LoginPage.dart';
-import 'package:supportive_app/ChatListPage/ChatListPage.dart';
-import 'package:supportive_app/ChatScreen/ChatScreen.dart';
-
-import '../../AuthPages/SignupPage/SignupPage.dart';
+import 'package:supportive_app/UI/ChangePasswordPage/ChangePasswordPage.dart';
+import 'package:supportive_app/UI/EditProfilePage/EditProfilePage.dart';
+import 'package:supportive_app/UI/ForgotPasswordPage/ForgotPassword.dart';
+import 'package:supportive_app/UI/ResetPasswordCodePage/ResetPasswordCodePage.dart';
 import '../../Constants/RouteConstants/RouteConstants.dart';
+import '../../UI/AuthPages/LoginPage.dart';
+import '../../UI/AuthPages/SignupPage/SignupPage.dart';
+import '../../UI/ChatListPage/ChatListPage.dart';
+import '../../UI/ChatScreen/ChatScreen.dart';
 
 
 class RouteGenerator {
@@ -28,6 +31,18 @@ class RouteGenerator {
       case RouteConstants.chatPage:
         return PageTransition(
             child: const ChatScreen(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstants.changePasswordPage:
+        return PageTransition(
+            child: const ChangePasswordPage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstants.editProfilePage:
+        return PageTransition(
+            child: const EditProfilePage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstants.forgotPasswordPage:
+        return PageTransition(
+            child: const ForgotPasswordPage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstants.otpVerificationPage:
+        return PageTransition(
+            child: const ResetPasswordCodePage(), type: PageTransitionType.fade, duration: animationDuration);
 
       default:
         return _errorRoute();

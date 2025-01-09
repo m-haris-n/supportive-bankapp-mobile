@@ -132,17 +132,32 @@ class _ChatListPageState extends State<ChatListPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Edit Profile",style: AppTextStyle.poppinsLightStyle.copyWith(
-                        fontSize: 12.sp
-                      ),),
-                      Divider(),
-                      Text("Change Password",style: AppTextStyle.poppinsLightStyle.copyWith(
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed(RouteConstants.editProfilePage);
+                        },
+                        child: Text("Edit Profile",style: AppTextStyle.poppinsLightStyle.copyWith(
                           fontSize: 12.sp
-                      ),),
+                        ),),
+                      ),
                       Divider(),
-                      Text("Log Out",style: AppTextStyle.poppinsLightStyle.copyWith(
-                          fontSize: 12.sp
-                      ),),
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed(RouteConstants.changePasswordPage);
+                        },
+                        child: Text("Change Password",style: AppTextStyle.poppinsLightStyle.copyWith(
+                            fontSize: 12.sp
+                        ),),
+                      ),
+                      Divider(),
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushNamedAndRemoveUntil(context, RouteConstants.initialPageRoute, (route)=>false);
+                        },
+                        child: Text("Log Out",style: AppTextStyle.poppinsLightStyle.copyWith(
+                            fontSize: 12.sp
+                        ),),
+                      ),
                     ],
                   ),
                 ),

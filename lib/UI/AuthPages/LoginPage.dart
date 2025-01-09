@@ -7,9 +7,9 @@ import 'package:supportive_app/Constants/ColorConstants/ColorConstants.dart';
 import 'package:supportive_app/components/CustomAppButton/CustomAppButton.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
 import 'package:supportive_app/components/TextStyle/TextStyle.dart';
-import '../Constants/RouteConstants/RouteConstants.dart';
-import '../components/CustomBackground/CustomBackground.dart';
 
+import '../../Constants/RouteConstants/RouteConstants.dart';
+import '../../components/CustomBackground/CustomBackground.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -68,6 +68,22 @@ class _LoginPageState extends State<LoginPage> {
                         borderSideColor: ColorConstants.whiteColor,
           
                       ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed(RouteConstants.forgotPasswordPage);
+                        },
+                        child: Text("Forgot Password?",style: AppTextStyle.poppinsLightStyle.copyWith(
+                          color: Colors.red
+                        ),
+                        textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
                     ),
                     CustomAppButton(
                       title: "Sign in",
