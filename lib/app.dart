@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:supportive_app/Providers/LoadingProvider.dart';
-import 'package:supportive_app/Providers/RegistrationProvider.dart';
-import 'package:supportive_app/Providers/UserLoginProvider.dart';
-
-import 'Constants/RouteConstants/RouteConstants.dart';
-import 'components/Routes/Routes.dart';
+import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
+import 'package:supportive_app/Providers/AuthProvider/SignupProvider.dart';
+import 'package:supportive_app/Providers/AuthProvider/LoginProvider.dart';
+import 'package:supportive_app/Routes/Routes.dart';
+import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -26,8 +25,8 @@ class _MyAppState extends State<MyApp> {
       builder: (_ , child) {
         return MultiProvider(providers: [
           ChangeNotifierProvider(create: (context)=>LoadingProvider() ),
-          ChangeNotifierProvider(create: (context)=>UserRegistrationProvider()),
-          ChangeNotifierProvider(create: (context)=>UserLoginProvider()),
+          ChangeNotifierProvider(create: (context)=>SignupProvider()),
+          ChangeNotifierProvider(create: (context)=>LoginProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -37,7 +36,7 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          initialRoute: RouteConstants.initialPageRoute,
+          initialRoute: RouteConstant.initialRoute,
           onGenerateRoute: RouteGenerator.generateRoute,
         ),
         );

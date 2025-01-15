@@ -42,11 +42,22 @@ dependencies:
   pinput: ^5.0.0
   dio: ^5.7.0
   shared_preferences: ^2.3.5
-  fluttertoast: ^8.2.10
+  another_flushbar: ^1.12.30
+  fluttericon: ^2.0.0
+  cached_network_image:
+  shimmer:
+
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.2
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/launcherIcon/financiaIcon.png"
+  min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
