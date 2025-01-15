@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:supportive_app/Providers/LoadingProvider.dart';
+import 'package:supportive_app/Providers/RegistrationProvider.dart';
+import 'package:supportive_app/Providers/UserLoginProvider.dart';
 
 import 'Constants/RouteConstants/RouteConstants.dart';
 import 'components/Routes/Routes.dart';
@@ -20,7 +24,12 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_ , child) {
-        return MaterialApp(
+        return MultiProvider(providers: [
+          ChangeNotifierProvider(create: (context)=>LoadingProvider() ),
+          ChangeNotifierProvider(create: (context)=>UserRegistrationProvider()),
+          ChangeNotifierProvider(create: (context)=>UserLoginProvider()),
+        ],
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Supportive',
           // You can use the library anywhere in the app even in theme
@@ -30,7 +39,9 @@ class _MyAppState extends State<MyApp> {
           ),
           initialRoute: RouteConstants.initialPageRoute,
           onGenerateRoute: RouteGenerator.generateRoute,
+        ),
         );
+
       },
 
     );

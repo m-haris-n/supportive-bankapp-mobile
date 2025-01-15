@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'dart:convert';
+import '../Constants/KeysConstants.dart';
 import '../SharedPrefrences/SharedPrefrences.dart';
-import '../Utils/Constants/Key_Constants.dart';
 import '../globals.dart' as globals;
 import 'app_exceptions.dart';
 class Api {
@@ -38,7 +38,7 @@ class Api {
   }
 
   static Future<dynamic> postRequestData(String url, dynamic body, BuildContext context,
-      {bool sendToken = false,formData = false}) async {
+      {bool sendToken = false,}) async {
     final dio = Dio();
     String apiUrl = globals.baseUrl!+url;
     debugPrint("URL: " + apiUrl);
@@ -50,25 +50,20 @@ class Api {
       debugPrint(token);
       var response = await dio.post(
         apiUrl,
-        data:  body,
+        data:  jsonEncode(body),
           options: Options(
             followRedirects: false,
             // will not throw errors
             validateStatus: (status) => true,
-            headers: formData
-                ? {
-              'Content-type': 'multipart/form-data',
-              'Authorization': 'Bearer $token',
-            }
-                : sendToken
+            headers: sendToken
                 ? {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization': 'Bearer $token',
             }
                 : {
-              'Accept': 'application/json',
-              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+              'Accept':'application/json'
 
             },
           ));
@@ -161,6 +156,9 @@ dynamic _returnListResponse(Response response) {
   print(response.statusCode);
   switch (response.statusCode) {
     case 200:
+      var responseJson = json.encode(response.data);
+      return responseJson;
+    case 201:
       var responseJson = json.encode(response.data);
       return responseJson;
     case 400:

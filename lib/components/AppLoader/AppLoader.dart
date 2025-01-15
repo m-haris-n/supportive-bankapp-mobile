@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../Utils/Constants/ColorConstants/ColorConstants.dart';
+import '../../Constants/ColorConstants/ColorConstants.dart';
 
 class AppLoader {
   showAppLoader() {
