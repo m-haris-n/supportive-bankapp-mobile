@@ -46,6 +46,8 @@ dependencies:
   fluttericon: ^2.0.0
   cached_network_image:
   shimmer:
+  modal_progress_hud_nsn:
+  email_validator: ^3.0.0
 
 
 dev_dependencies:

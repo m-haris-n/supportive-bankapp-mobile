@@ -71,10 +71,10 @@ class Api {
       debugPrint("Post Api Call Error: $e");
       debugPrint("Post Api Call Error: ${e.error}");
       print(e.response);
-      debugPrint(e.response!.data);
+      // debugPrint(e.response!.data);
       // if (e.response!.data["message"].runtimeType == String) {
       // } else {}
-      ShowToast().showFlushBar(context, message: "${e.response!}", error: true);
+      // ShowToast().showFlushBar(context, message: "${e.response!}", error: true);
       responseJson = _returnListResponse(e.response!);
       return responseJson;
     }

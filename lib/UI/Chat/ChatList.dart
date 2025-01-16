@@ -152,8 +152,9 @@ class _ChatListPageState extends State<ChatListPage> {
                       Divider(),
                       InkWell(
                         onTap: (){
-                          Navigator.pushNamedAndRemoveUntil(context, RouteConstant.initialRoute, (route)=>false);
-                        },
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, RouteConstant.login, (route) => false);
+                              },
                         child: Text("Log Out",style: AppTextStyle.poppinsLightStyle.copyWith(
                             fontSize: 12.sp
                         ),),

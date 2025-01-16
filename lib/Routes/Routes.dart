@@ -19,7 +19,7 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case RouteConstant.initialRoute:
+      case RouteConstant.login:
         return PageTransition(
             child: const LoginPage(), type: PageTransitionType.fade, duration: animationDuration);
       case RouteConstant.signupPageRoute:

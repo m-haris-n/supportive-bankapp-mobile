@@ -1,5 +1,5 @@
 class RouteConstant {
-  static const String initialRoute = '/';
+  static const String login = 'login';
   static const signupPageRoute = "signup";
   static const chatListPage = "chatListPage";
   static const chatPage = "chatPage";

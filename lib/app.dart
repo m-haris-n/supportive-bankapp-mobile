@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
-import 'package:supportive_app/Providers/AuthProvider/SignupProvider.dart';
-import 'package:supportive_app/Providers/AuthProvider/LoginProvider.dart';
+import 'package:supportive_app/Providers/AuthProvider/AuthProvider.dart';
 import 'package:supportive_app/Routes/Routes.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 
@@ -25,9 +24,8 @@ class _MyAppState extends State<MyApp> {
       builder: (_ , child) {
         return MultiProvider(providers: [
           ChangeNotifierProvider(create: (context)=>LoadingProvider() ),
-          ChangeNotifierProvider(create: (context)=>SignupProvider()),
-          ChangeNotifierProvider(create: (context)=>LoginProvider()),
-        ],
+            ChangeNotifierProvider(create: (context) => AuthProvider()),
+          ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Supportive',
@@ -36,8 +34,8 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          initialRoute: RouteConstant.initialRoute,
-          onGenerateRoute: RouteGenerator.generateRoute,
+            initialRoute: RouteConstant.login,
+            onGenerateRoute: RouteGenerator.generateRoute,
         ),
         );
 
