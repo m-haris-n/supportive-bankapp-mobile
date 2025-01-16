@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supportive_app/Components/AppLoader/ShowLoaderLayer.dart';
 import 'package:supportive_app/Components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
 import 'package:supportive_app/Providers/AuthProvider/AuthProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/AuthService/LoginService.dart';
-import 'package:supportive_app/Services/SharedPrefrences/SharedPrefrences.dart';
+import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
@@ -29,6 +28,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  bool? isUserIdAvailable;
+
+  checkAppStatus() async {
+    isUserIdAvailable = await SharedPreferencesService().checkKey(KeysConstant.userId);
+    if (isUserIdAvailable == true) {
+      Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.chatListPage, (route) => false);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkAppStatus();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
-import 'package:supportive_app/Services/SharedPrefrences/SharedPrefrences.dart';
+import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
 import 'package:supportive_app/Utils/Constant/ApiUrl.dart';
 import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
 import 'ApiCallExceptions.dart';

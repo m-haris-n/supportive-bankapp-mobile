@@ -3,4 +3,5 @@ class ApiUrl {
   static const String register = "auth/register";
   static const String login = "auth/login";
   static const String logout = "logout";
+  static const String plaidLinkToken = "plaid/link_token";
 }
