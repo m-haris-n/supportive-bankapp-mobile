@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
+import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/TextStyle/TextStyle.dart';
@@ -176,6 +178,8 @@ class _ChatListPageState extends State<ChatListPage> {
                           Divider(),
                           InkWell(
                             onTap: () {
+                              SharedPreferencesService().remove(KeysConstant.userId);
+                              SharedPreferencesService().remove(KeysConstant.accessToken);
                               Navigator.pushNamedAndRemoveUntil(
                                   context, RouteConstant.login, (route) => false);
                             },
