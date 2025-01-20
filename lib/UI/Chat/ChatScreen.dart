@@ -157,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 response.responseData?.success == true &&
                                 (response.responseData!.status == 201 ||
                                     response.responseData!.status == 200)) {
-                              plaidProvider.callPlaidPayment();
+                              plaidProvider.callPlaidPayment(context);
                             } else {
                               ShowToast().showFlushBar(context,
                                       message:
