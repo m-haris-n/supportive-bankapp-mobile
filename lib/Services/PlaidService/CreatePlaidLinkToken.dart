@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supportive_app/Models/PlaidModel/PlaidLinkResponseModel.dart';
-import 'package:supportive_app/Providers/AuthProvider/AuthProvider.dart';
 import 'package:supportive_app/Providers/PlaidProvider/PlaidProvider.dart';
 import 'package:supportive_app/Services/Api/ApiCallExceptions.dart';
 import 'package:supportive_app/Services/Api/ApiCallFunctions.dart';

@@ -30,9 +30,10 @@ class PlaidProvider extends ChangeNotifier {
       debugPrint("Plaid Link Data: ${data.toJson()}");
       debugPrint("Plaid AccessToken: ${data.publicToken}");
       loadingProvider.setLoading(true);
-      if (data.publicToken.isNotEmpty) {
+      if (data.publicToken.isNotEmpty && data.metadata.institution != null) {
         GetPlaidAccessTokenService()
-            .callGetPlaidAccessTokenService(context, publicToken: data.publicToken)
+            .callGetPlaidAccessTokenService(context,
+                publicToken: data.publicToken, institution: data.metadata.institution)
             .then((response) {
           loadingProvider.setLoading(false);
           if (response!.responseData != null &&
