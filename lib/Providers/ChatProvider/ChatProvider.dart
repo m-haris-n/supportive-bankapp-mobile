@@ -14,6 +14,8 @@ class ChatProvider extends ChangeNotifier {
   ChatPinResponseModel? chatPinResponse;
   ChatUnpinResponseModel? chatUnpinResponse;
 
+  TextEditingController chatMessage = TextEditingController();
+
   setAllChatResponseModel(GetAllChatResponseModel response) {
     getAllChatResponse = response;
     notifyListeners();
@@ -41,6 +43,21 @@ class ChatProvider extends ChangeNotifier {
 
   setChatUnpinResponseModel(ChatUnpinResponseModel response) {
     chatUnpinResponse = response;
+    notifyListeners();
+  }
+
+  deleteChatFromResponse(String? chatId, {bool isPinChat = false}) {
+    if (isPinChat) {
+      getAllChatResponse!.data!.pinnedChats!.removeWhere((element) => element.messages!.first.id == chatId);
+    } else {
+      getAllChatResponse!.data!.chats!.removeWhere((element) => element.messages!.first.id == chatId);
+    }
+
+    notifyListeners();
+  }
+
+  cleanChatBox() {
+    chatMessage.clear();
     notifyListeners();
   }
 }

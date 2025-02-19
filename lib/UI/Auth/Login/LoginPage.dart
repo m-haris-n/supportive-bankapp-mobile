@@ -158,9 +158,11 @@ class _LoginPageState extends State<LoginPage> {
                                   SharedPreferencesService()
                                       .setString(KeysConstant.userId, response.responseData!.data!.id);
                                   Future.delayed(Duration(seconds: 2), () {
-                                    if (isPlaidTokenAvailable! &&
-                                        response.responseData!.data != null &&
+                                    if (response.responseData!.data != null &&
                                         response.responseData!.data!.isPlaidConnect == true) {
+                                      SharedPreferencesService().setString(
+                                          KeysConstant.plaidAccessToken, "Plaid Login Successfully");
+
                                       Navigator.of(context).pushNamedAndRemoveUntil(
                                           RouteConstant.allChatListPage, (route) => false);
                                     } else {

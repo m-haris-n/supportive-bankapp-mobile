@@ -43,6 +43,7 @@ class AppIcons {
   static const IconData fileUpload = Icons.file_upload_rounded;
   static const IconData info = Icons.info_outline_rounded;
   static const IconData changeCamera = Icons.cameraswitch_rounded;
+  static const IconData settings = Icons.settings;
   static const IconData masterCard = FontAwesome.cc_mastercard;
   static const IconData visaCard = FontAwesome.cc_visa;
 }

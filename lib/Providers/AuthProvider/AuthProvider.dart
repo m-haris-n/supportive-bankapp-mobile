@@ -10,7 +10,9 @@ class AuthProvider extends ChangeNotifier {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController oldPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   LoginResponseModel? loginResponse;
   SignupResponseModel? signupResponse;
@@ -30,6 +32,12 @@ class AuthProvider extends ChangeNotifier {
 
   setUserProfileResponse(UserProfileResponseModel data) {
     userProfileResponse = data;
+    if (userProfileResponse != null && userProfileResponse!.data != null) {
+      var userData = userProfileResponse!.data;
+      firstNameController.text = userData!.firstName ?? "";
+      lastNameController.text = userData.lastName ?? "";
+      emailController.text = userData.email ?? "";
+    }
     notifyListeners();
   }
 
@@ -40,6 +48,13 @@ class AuthProvider extends ChangeNotifier {
 
   setUpdateProfileResponse(UpdateProfileResponseModel data) {
     updateProfileResponse = data;
+    notifyListeners();
+  }
+
+  reset() {
+    oldPasswordController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
     notifyListeners();
   }
 }

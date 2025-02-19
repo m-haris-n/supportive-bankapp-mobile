@@ -7,4 +7,9 @@ class LoadingProvider extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
+
+  callUnFocus(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    notifyListeners();
+  }
 }

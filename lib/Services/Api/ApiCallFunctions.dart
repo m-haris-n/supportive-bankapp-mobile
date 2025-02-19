@@ -81,7 +81,7 @@ class Api {
     }
   }
 
-  Future<dynamic> patchRequest(context, String apiEndPoint, dynamic body,
+  Future<dynamic> putRequest(context, String apiEndPoint, dynamic body,
       {bool sendToken = false, bool uploadDocument = false}) async {
     String apiURLAddress = ApiUrl.apiBaseUrl + apiEndPoint;
 
@@ -90,7 +90,7 @@ class Api {
     debugPrint("Token: $token");
     var responseJson;
     try {
-      var response = await _dio.patch(apiURLAddress,
+      var response = await _dio.put(apiURLAddress,
           options: Options(
               headers: uploadDocument
                   ? {

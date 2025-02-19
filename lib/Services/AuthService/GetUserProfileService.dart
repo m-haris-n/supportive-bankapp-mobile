@@ -8,8 +8,8 @@ import 'package:supportive_app/Services/Api/ApiCallFunctions.dart';
 import 'package:supportive_app/Services/Api/ApiCallResponse.dart';
 import 'package:supportive_app/Utils/Constant/ApiUrl.dart';
 
-class GetChatByIdService {
-  Future<ApiCallResponse<UserProfileResponseModel>> callGetChatByIdService(BuildContext context,
+class GetUserProfileService {
+  Future<ApiCallResponse<UserProfileResponseModel>> callGetUserProfileService(BuildContext context,
       {String? chatId}) async {
     try {
       var response = await Api().getRequest(context, ApiUrl.userMe, sendToken: true);

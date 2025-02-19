@@ -11,7 +11,6 @@ import 'package:supportive_app/UI/Chat/ChatScreen.dart';
 import 'package:supportive_app/UI/UserProfile/EditProfile.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 
-
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -31,7 +30,11 @@ class RouteGenerator {
             child: const AllChatListPage(), type: PageTransitionType.fade, duration: animationDuration);
       case RouteConstant.chatScreen:
         return PageTransition(
-            child: const ChatScreen(), type: PageTransitionType.fade, duration: animationDuration);
+            child: ChatScreen(
+              data: args,
+            ),
+            type: PageTransitionType.fade,
+            duration: animationDuration);
       case RouteConstant.changePasswordPage:
         return PageTransition(
             child: const ChangePasswordPage(), type: PageTransitionType.fade, duration: animationDuration);

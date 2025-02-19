@@ -14,9 +14,14 @@ class UpdateProfileService {
     var userId = await SharedPreferencesService().getString(KeysConstant.userId);
 
     var authProvider = Provider.of<AuthProvider>(context, listen: false);
-    UpdateProfileRequestModel requestModel = UpdateProfileRequestModel(id: userId);
+    UpdateProfileRequestModel requestModel = UpdateProfileRequestModel(
+        id: userId,
+        firstName: authProvider.firstNameController.text,
+        lastName: authProvider.lastNameController.text);
+    debugPrint("UpdateProfileRequestModel:${requestModel.toJson()}");
     try {
-      var response = await Api().patchRequest(context, ApiUrl.updateProfile, requestModel.toJson());
+      var response =
+          await Api().putRequest(context, ApiUrl.updateProfile, requestModel.toJson(), sendToken: true);
       debugPrint("UpdateProfileResponse:$response");
       UpdateProfileResponseModel responseModel = UpdateProfileResponseModel.fromJson(response);
       debugPrint("UpdateProfileResponseModel:${responseModel.toJson()}");

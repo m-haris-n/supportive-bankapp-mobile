@@ -17,9 +17,13 @@ class ChangePasswordService {
     var userId = await SharedPreferencesService().getString(KeysConstant.userId);
 
     var authProvider = Provider.of<AuthProvider>(context, listen: false);
-    ChangePasswordRequestModel requestModel = ChangePasswordRequestModel(id: userId);
+    ChangePasswordRequestModel requestModel = ChangePasswordRequestModel(
+        id: userId,
+        oldPassword: authProvider.oldPasswordController.text,
+        newPassword: authProvider.confirmPasswordController.text);
     try {
-      var response = await Api().patchRequest(context, ApiUrl.changePassword, requestModel.toJson());
+      var response =
+          await Api().putRequest(context, ApiUrl.changePassword, requestModel.toJson(), sendToken: true);
       debugPrint("ChangePasswordResponse:$response");
       ChangePasswordResponseModel responseModel = ChangePasswordResponseModel.fromJson(response);
       debugPrint("ChangePasswordResponseModel:${responseModel.toJson()}");
