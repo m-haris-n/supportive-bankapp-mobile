@@ -29,11 +29,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool? isUserIdAvailable;
+  bool? isPlaidTokenAvailable;
 
   checkAppStatus() async {
     isUserIdAvailable = await SharedPreferencesService().checkKey(KeysConstant.userId);
+    isPlaidTokenAvailable = await SharedPreferencesService().checkKey(KeysConstant.plaidAccessToken);
     if (isUserIdAvailable == true) {
-      Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.chatListPage, (route) => false);
+      if (isPlaidTokenAvailable!) {
+        Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.allChatListPage, (route) => false);
+      } else {
+        Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.plaidAuth, (route) => false);
+      }
     }
   }
 
@@ -152,8 +158,15 @@ class _LoginPageState extends State<LoginPage> {
                                   SharedPreferencesService()
                                       .setString(KeysConstant.userId, response.responseData!.data!.id);
                                   Future.delayed(Duration(seconds: 2), () {
-                                    Navigator.of(context).pushNamedAndRemoveUntil(
-                                        RouteConstant.chatListPage, (route) => false);
+                                    if (isPlaidTokenAvailable! &&
+                                        response.responseData!.data != null &&
+                                        response.responseData!.data!.isPlaidConnect == true) {
+                                      Navigator.of(context).pushNamedAndRemoveUntil(
+                                          RouteConstant.allChatListPage, (route) => false);
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(RouteConstant.plaidAuth, (route) => false);
+                                    }
                                   });
                                 } else {
                                   ShowToast().showFlushBar(context,

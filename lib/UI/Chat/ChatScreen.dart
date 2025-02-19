@@ -4,12 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:supportive_app/Components/AppLoader/ShowLoaderLayer.dart';
-import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
+import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
-import 'package:supportive_app/Providers/PlaidProvider/PlaidProvider.dart';
-import 'package:supportive_app/Services/PlaidService/CreatePlaidLinkToken.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
+import 'package:supportive_app/Utils/HelperFunction.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
 import 'package:supportive_app/components/TextStyle/TextStyle.dart';
@@ -24,7 +23,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer2<LoadingProvider, PlaidProvider>(builder: (context, loadingProvider, plaidProvider, _) {
+    return Consumer2<LoadingProvider, ChatProvider>(builder: (context, loadingProvider, chatProvider, _) {
+      var chatResponse = chatProvider.getChatByIdResponse;
+      var chatData = chatResponse != null ? chatResponse.data : null;
       return Scaffold(
         body: ShowLoaderLayer(
           startLoading: loadingProvider.isLoading,
@@ -57,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         padding: EdgeInsets.symmetric(vertical: 5.h),
                         child: Center(
                           child: Text(
-                            "Last Updated: 12.02.26",
+                            "Last Updated: ${extractTime(chatData!.updatedAt!)}",
                             style: AppTextStyle.poppinsLightStyle
                                 .copyWith(color: ColorConstants.textGreyColor, fontSize: 12.sp),
                           ),
@@ -65,68 +66,55 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       Expanded(
                           child: ListView.builder(
-                              itemCount: 2,
+                              itemCount: chatData.messages!.length,
                               itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(12.sp),
-                                      margin: EdgeInsets.symmetric(vertical: 10.h),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12.sp),
-                                        color: ColorConstants.whiteColor,
-                                      ),
-                                      child: Text(
-                                        "There are many variations of passages of many variations"
-                                        "There are many variations of passages of..There are many"
-                                        "variations of passages of.. There are many variations of"
-                                        "passages of..There are many variations of passages of.."
-                                        "There are many variations of passages of..",
-                                        style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        width: 250.w,
-                                        padding: EdgeInsets.all(12.sp),
-                                        margin: EdgeInsets.symmetric(vertical: 10.h),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12.sp),
-                                          color: ColorConstants.appPrimaryColor,
-                                        ),
-                                        child: Text(
-                                          "There are many variations of passages of many variations",
-                                          style: AppTextStyle.poppinsLightStyle
-                                              .copyWith(fontSize: 12.sp, color: ColorConstants.whiteColor),
-                                        ),
-                                      ),
-                                    ),
-                                    index == 0
-                                        ? Row(
-                                            children: [
-                                              Expanded(
-                                                  child: DottedLine(
-                                                direction: Axis.horizontal,
-                                                dashColor: ColorConstants.textGreyColor,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                                child: Text(
-                                                  "10:30 am - 12/02/26",
-                                                  style: AppTextStyle.poppinsLightStyle.copyWith(
-                                                      color: ColorConstants.textGreyColor, fontSize: 12.sp),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  child: DottedLine(
-                                                      direction: Axis.horizontal,
-                                                      dashColor: ColorConstants.textGreyColor)),
-                                            ],
-                                          )
-                                        : SizedBox(),
-                                  ],
+                                var message = chatData.messages![index];
+                                return Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(12.sp),
+                                  margin: EdgeInsets.symmetric(vertical: 10.h) +
+                                      EdgeInsets.only(
+                                          left: message.senderId != null ? 50.sp : 0,
+                                          right: message.senderId == null ? 50.sp : 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.sp),
+                                    color: message.senderId != null
+                                        ? ColorConstants.appPrimaryColor
+                                        : ColorConstants.whiteColor,
+                                  ),
+                                  child: Text(
+                                    textAlign: TextAlign.justify,
+                                    message.message ?? "",
+                                    style: AppTextStyle.poppinsLightStyle.copyWith(
+                                        fontSize: 12.sp,
+                                        color: message.senderId != null
+                                            ? ColorConstants.whiteColor
+                                            : ColorConstants.blackColor),
+                                  ),
                                 );
+                                // index == 0
+                                //     ? Row(
+                                //         children: [
+                                //           Expanded(
+                                //               child: DottedLine(
+                                //             direction: Axis.horizontal,
+                                //             dashColor: ColorConstants.textGreyColor,
+                                //           )),
+                                //           Padding(
+                                //             padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                //             child: Text(
+                                //               "10:30 am - 12/02/26",
+                                //               style: AppTextStyle.poppinsLightStyle.copyWith(
+                                //                   color: ColorConstants.textGreyColor, fontSize: 12.sp),
+                                //             ),
+                                //           ),
+                                //           Expanded(
+                                //               child: DottedLine(
+                                //                   direction: Axis.horizontal,
+                                //                   dashColor: ColorConstants.textGreyColor)),
+                                //         ],
+                                //       )
+                                //     : SizedBox(),
                               })),
                     ],
                   ),
@@ -147,28 +135,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         readOnly: true,
                         filledColor: ColorConstants.textFieldFilledColor,
                         borderSideColor: ColorConstants.textFieldFilledColor,
-                        onTap: () {
-                          loadingProvider.setLoading(true);
-                          CreatePlaidLinkTokenService()
-                              .callCreatePlaidLinkTokenService(context)
-                              .then((response) {
-                            loadingProvider.setLoading(false);
-                            if (response.responseData != null &&
-                                response.responseData?.success == true &&
-                                (response.responseData!.status == 201 ||
-                                    response.responseData!.status == 200)) {
-                              plaidProvider.callPlaidPayment(context);
-                            } else {
-                              ShowToast().showFlushBar(context,
-                                      message:
-                                      "${response.responseData != null
-                                          ? response.responseData?.data!
-                                          : "Please login again"}",
-                                      error: true);
-                                }
-                              });
-                            },
-                          )),
+                        onTap: () {},
+                      )),
                       SvgPicture.asset(AssetsImages.sendChatIcon)
                     ],
                   ),

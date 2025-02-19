@@ -64,9 +64,9 @@ class CustomAppButton extends StatelessWidget {
               color: textColor??ColorConstants.whiteColor
             ),
           ):textWidget!,
-          SizedBox(),
-
-
+          SizedBox(
+            width: btnIcon != null ? 30 : 0,
+          ),
         ],
       ),
 

@@ -1,11 +1,11 @@
-class LoginResponseModel {
+class UserProfileResponseModel {
   bool? success;
   Data? data;
   int? status;
 
-  LoginResponseModel({this.success, this.data, this.status});
+  UserProfileResponseModel({this.success, this.data, this.status});
 
-  LoginResponseModel.fromJson(Map<String, dynamic> json) {
+  UserProfileResponseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     status = json['status'];
@@ -24,34 +24,25 @@ class LoginResponseModel {
 
 class Data {
   String? id;
-  bool? isPlaidConnect;
-  String? token;
-  String? type;
-  String? expiresIn;
+  String? firstName;
+  dynamic lastName;
   String? email;
-  String? password;
 
-  Data({this.id, this.token, this.type, this.expiresIn, this.email, this.password, this.isPlaidConnect});
+  Data({this.id, this.firstName, this.lastName, this.email});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    isPlaidConnect = json['is_plaid_connect'];
-    token = json['token'];
-    type = json['type'];
-    expiresIn = json['expires_in'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     email = json['email'];
-    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['is_plaid_connect'] = this.isPlaidConnect;
-    data['token'] = this.token;
-    data['type'] = this.type;
-    data['expires_in'] = this.expiresIn;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
     data['email'] = this.email;
-    data['password'] = this.password;
     return data;
   }
 }

@@ -10,7 +10,8 @@ import 'ApiCallExceptions.dart';
 class Api {
   Dio _dio = Dio();
 
-  Future<dynamic> getRequest(context, String apiEndPoint, {bool sendToken = true, bool checkAuthToken = false}) async {
+  Future<dynamic> getRequest(context, String apiEndPoint,
+      {bool sendToken = true, bool checkAuthToken = false}) async {
     String apiURLAddress = ApiUrl.apiBaseUrl + apiEndPoint;
     debugPrint("URL: $apiURLAddress");
     String? token = await SharedPreferencesService().getString(KeysConstant.accessToken);
@@ -122,7 +123,8 @@ class Api {
     }
   }
 
-  Future<dynamic> deleteRequest(context, String apiEndPoint, {bool sendToken = true, int? index}) async {
+  Future<dynamic> deleteRequest(context, String apiEndPoint, dynamic body,
+      {bool sendToken = true, int? index}) async {
     String apiURLAddress = ApiUrl.apiBaseUrl + apiEndPoint;
     debugPrint("URL: " + apiURLAddress);
     String? token = await SharedPreferencesService().getString(KeysConstant.accessToken);
@@ -131,14 +133,16 @@ class Api {
     try {
       var response = await _dio.delete(apiURLAddress,
           options: Options(
-              headers: sendToken
-                  ? {
-                      "accept": "application/json",
-                      "Authorization": "Bearer $token",
-                    }
-                  : {
-                      "accept": "application/json",
-                    }));
+            headers: sendToken
+                ? {
+                    "accept": "application/json",
+                    "Authorization": "Bearer $token",
+                  }
+                : {
+                    "accept": "application/json",
+                  },
+          ),
+          data: jsonEncode(body));
       responseJson = _returnListResponse(response);
       return responseJson;
     } on DioException catch (e) {

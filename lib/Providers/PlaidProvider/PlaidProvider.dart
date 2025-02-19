@@ -6,6 +6,9 @@ import 'package:supportive_app/Models/PlaidModel/PlaidAccessTokenResponseModel.d
 import 'package:supportive_app/Models/PlaidModel/PlaidLinkResponseModel.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/PlaidService/GetPlaidAccessTokenService.dart';
+import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
+import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
+import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 
 class PlaidProvider extends ChangeNotifier {
   PlaidLinkResponseModel? plaidLinkResponse;
@@ -39,7 +42,12 @@ class PlaidProvider extends ChangeNotifier {
           if (response!.responseData != null &&
               response.responseData?.success == true &&
               (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-            ShowToast().showFlushBar(context, message: "Plaid Token Create Successfully");
+            ShowToast().showFlushBar(context, message: "Plaid Login Successfully");
+            SharedPreferencesService().setString(KeysConstant.plaidAccessToken, "Plaid Login Successfully");
+
+            Future.delayed(Duration(seconds: 2), () {
+              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.allChatListPage, (route) => false);
+            });
           } else {
             ShowToast()
                 .showFlushBar(context, message: "${response.responseData?.data!.message}", error: true);

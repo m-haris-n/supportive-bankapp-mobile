@@ -3,9 +3,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:supportive_app/UI/Auth/ChangePassword/ChangePassword.dart';
 import 'package:supportive_app/UI/Auth/ForgotPassword/ForgotPassword.dart';
 import 'package:supportive_app/UI/Auth/Login/LoginPage.dart';
+import 'package:supportive_app/UI/Auth/PlaidAuth/PlaidAuth.dart';
 import 'package:supportive_app/UI/Auth/ResetPasswordCode/ResetPasswordCode.dart';
 import 'package:supportive_app/UI/Auth/Signup/SignupPage.dart';
-import 'package:supportive_app/UI/Chat/ChatList.dart';
+import 'package:supportive_app/UI/Chat/AllChatList.dart';
 import 'package:supportive_app/UI/Chat/ChatScreen.dart';
 import 'package:supportive_app/UI/UserProfile/EditProfile.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
@@ -25,10 +26,10 @@ class RouteGenerator {
       case RouteConstant.signupPageRoute:
         return PageTransition(
             child: const SignupPage(), type: PageTransitionType.fade, duration: animationDuration);
-      case RouteConstant.chatListPage:
+      case RouteConstant.allChatListPage:
         return PageTransition(
-            child: const ChatListPage(), type: PageTransitionType.fade, duration: animationDuration);
-      case RouteConstant.chatPage:
+            child: const AllChatListPage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstant.chatScreen:
         return PageTransition(
             child: const ChatScreen(), type: PageTransitionType.fade, duration: animationDuration);
       case RouteConstant.changePasswordPage:
@@ -40,6 +41,10 @@ class RouteGenerator {
       case RouteConstant.forgotPasswordPage:
         return PageTransition(
             child: const ForgotPasswordPage(), type: PageTransitionType.fade, duration: animationDuration);
+      case RouteConstant.plaidAuth:
+        return PageTransition(
+            child: const PlaidAuth(), type: PageTransitionType.fade, duration: animationDuration);
+
       case RouteConstant.otpVerificationPage:
         return PageTransition(
             child: const ResetPasswordCodePage(), type: PageTransitionType.fade, duration: animationDuration);

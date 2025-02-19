@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Providers/AuthProvider/AuthProvider.dart';
 import 'package:supportive_app/Providers/PlaidProvider/PlaidProvider.dart';
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (context) => LoadingProvider()),
             ChangeNotifierProvider(create: (context) => AuthProvider()),
             ChangeNotifierProvider(create: (context) => PlaidProvider()),
+            ChangeNotifierProvider(create: (context) => ChatProvider()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
