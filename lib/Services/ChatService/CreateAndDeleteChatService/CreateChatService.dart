@@ -18,7 +18,8 @@ class CreateChatService {
     CreateChatRequestModel requestModel = CreateChatRequestModel(userId: userId);
     debugPrint("CreateChatRequestModel:${requestModel.toJson()}");
     try {
-      var response = await Api().postRequest(context, ApiUrl.createChat, requestModel.toJson());
+      var response =
+          await Api().postRequest(context, ApiUrl.createChat, requestModel.toJson(), sendToken: true);
       debugPrint("CreateChatResponse:$response");
       CreateChatResponseModel responseModel = CreateChatResponseModel.fromJson(response);
       debugPrint("CreateChatResponseModel:${responseModel.toJson()}");

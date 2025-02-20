@@ -126,7 +126,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               ShowToast().showFlushBar(context, message: "Password change successfully");
                               authProvider.reset();
                               Future.delayed(Duration(seconds: 2), () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context)
+                                  ..pop()
+                                  ..pop();
                               });
                             } else {
                               ShowToast().showFlushBar(context,

@@ -95,7 +95,7 @@ class _AllChatListPageState extends State<AllChatListPage> {
                       Expanded(
                           child: ListView(
                         padding: EdgeInsets.zero,
-                        physics: BouncingScrollPhysics(),
+                        physics: AlwaysScrollableScrollPhysics(), // ✅ Important!
                         children: [
                           InkWell(
                             onTap: () {
@@ -300,9 +300,11 @@ class _AllChatListPageState extends State<AllChatListPage> {
             return chatMessage != null && chatMessage != [] && chatMessage.isNotEmpty
                 ? Dismissible(
                     key: Key(chatMessage.first.id!),
-                    background: slideRightBackground(chatMessage.first.id!, unpinChat: true),
-                    secondaryBackground: slideLeftBackground(chatMessage.first.id!),
-                    confirmDismiss: (direction) => confirmDismiss(context, direction, chatMessage.first.id!,
+                    background: slideRightBackground(unpinChat: true),
+                    secondaryBackground: slideRightBackground(unpinChat: true),
+                    // secondaryBackground: slideLeftBackground(chatMessage.first.id!),
+                    confirmDismiss: (direction) => confirmDismiss(
+                        context, direction, chatMessage.first.chatId!,
                         unpinChat: true, swipePinChat: true),
                     child: InkWell(
                       onTap: () {
@@ -392,9 +394,10 @@ class _AllChatListPageState extends State<AllChatListPage> {
             return chatMessage != null && chatMessage != [] && chatMessage.isNotEmpty
                 ? Dismissible(
                     key: Key(chatMessage.first.id!),
-                    background: slideRightBackground(chatMessage.first.id!),
-                    secondaryBackground: slideLeftBackground(chatMessage.first.id!),
-                    confirmDismiss: (direction) => confirmDismiss(context, direction, chatMessage.first.id!),
+                    background: slideRightBackground(),
+                    secondaryBackground: slideLeftBackground(),
+                    confirmDismiss: (direction) =>
+                        confirmDismiss(context, direction, chatMessage.first.chatId!),
                     child: InkWell(
                       onTap: () {
                         Provider.of<LoadingProvider>(context, listen: false).setLoading(true);

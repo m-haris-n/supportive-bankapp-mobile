@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:supportive_app/Models/ChatModel/ChatPinModel/ChatUnpinRequestModel.dart';
-import 'package:supportive_app/Models/ChatModel/ChatPinModel/ChatUnpinResponseModel.dart';
+import 'package:supportive_app/Models/ChatModel/SendChatModel/SendChatMessageRequestModel.dart';
+import 'package:supportive_app/Models/ChatModel/SendChatModel/SendChatMessageResponseModel.dart';
 import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Services/Api/ApiCallFunctions.dart';
 import 'package:supportive_app/Services/Api/ApiCallResponse.dart';
@@ -9,20 +9,21 @@ import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceS
 import 'package:supportive_app/Utils/Constant/ApiUrl.dart';
 import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
 
-class UnpinChatService {
-  Future<ApiCallResponse<ChatUnpinResponseModel>?> callUnpinChatService(
+class SendChatService {
+  Future<ApiCallResponse<SendChatMessageResponseModel>?> callSendChatService(
       BuildContext context, String? chatId) async {
     var userId = await SharedPreferencesService().getString(KeysConstant.userId);
     var chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    ChatUnpinRequestModel requestModel = ChatUnpinRequestModel(chatId: chatId);
-    debugPrint("DeleteChatRequestModel:${requestModel.toJson()}");
+    SendChatMessageRequestModel requestModel =
+        SendChatMessageRequestModel(senderId: userId, chatId: chatId, message: chatProvider.chatMessage.text);
+    debugPrint("SendChatMessageRequestModel:${requestModel.toJson()}");
     try {
       var response =
-          await Api().deleteRequest(context, ApiUrl.unpinChat, requestModel.toJson(), sendToken: true);
-      debugPrint("ChatUnpinResponse:$response");
-      ChatUnpinResponseModel responseModel = ChatUnpinResponseModel.fromJson(response);
-      debugPrint("ChatUnpinResponseModel:${responseModel.toJson()}");
-      chatProvider.setChatUnpinResponseModel(responseModel);
+          await Api().postRequest(context, ApiUrl.sendMessage, requestModel.toJson(), sendToken: true);
+      debugPrint("SendChatMessageResponse:$response");
+      SendChatMessageResponseModel responseModel = SendChatMessageResponseModel.fromJson(response);
+      debugPrint("SendChatMessageResponseModel:${responseModel.toJson()}");
+      chatProvider.setSendChatMessageResponse(responseModel);
       return ApiCallResponse.completed(responseModel);
     } catch (e) {
       debugPrint("LoginApiError:${e.toString()}");

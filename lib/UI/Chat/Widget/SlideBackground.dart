@@ -8,14 +8,17 @@ import 'package:supportive_app/Services/ChatService/PinChatService/PinChatServic
 import 'package:supportive_app/Services/ChatService/PinChatService/UnpinChatService.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 
-confirmDismiss(context, direction, String? chatId,
+Future<bool> confirmDismiss(context, direction, String? chatId,
     {bool unpinChat = false, bool swipePinChat = false}) async {
-  if (direction == DismissDirection.endToStart) {
+  if (direction == DismissDirection.endToStart && swipePinChat == false) {
     final bool res = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text("Are you sure you want to delete this chat"),
+            content: Text(
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+                "Are you sure you want to delete this chat"),
             actions: <Widget>[
               TextButton(
                 child: Text(
@@ -23,7 +26,7 @@ confirmDismiss(context, direction, String? chatId,
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
               ),
               TextButton(
@@ -41,9 +44,7 @@ confirmDismiss(context, direction, String? chatId,
                         response.responseData?.success == true &&
                         (response.responseData!.status == 201 || response.responseData!.status == 200)) {
                       Provider.of<ChatProvider>(context, listen: false)
-                          .deleteChatFromResponse(chatId, isPinChat: swipePinChat);
-
-                      Navigator.of(context).pop();
+                          .deleteChatFromResponse(context, chatId, isPinChat: swipePinChat);
                     } else {
                       ShowToast().showFlushBar(context,
                           message:
@@ -62,9 +63,12 @@ confirmDismiss(context, direction, String? chatId,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text(unpinChat
-                ? "Are you sure you want to unpin this chat"
-                : "Are you sure you want to pin this chat"),
+            content: Text(
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+                unpinChat
+                    ? "Are you sure you want to unpin this chat"
+                    : "Are you sure you want to pin this chat"),
             actions: <Widget>[
               TextButton(
                 child: Text(
@@ -72,7 +76,7 @@ confirmDismiss(context, direction, String? chatId,
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
               ),
               TextButton(
@@ -89,7 +93,7 @@ confirmDismiss(context, direction, String? chatId,
                       if (response!.responseData != null &&
                           response.responseData?.success == true &&
                           (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(false);
                       } else {
                         ShowToast().showFlushBar(context,
                             message:
@@ -104,7 +108,7 @@ confirmDismiss(context, direction, String? chatId,
                       if (response!.responseData != null &&
                           response.responseData?.success == true &&
                           (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(false);
                       } else {
                         ShowToast().showFlushBar(context,
                             message: "Chat can't pin. They are some server issue", error: true);
@@ -120,7 +124,7 @@ confirmDismiss(context, direction, String? chatId,
   }
 }
 
-Widget slideRightBackground(String? chatId, {bool unpinChat = false}) {
+Widget slideRightBackground({bool unpinChat = false}) {
   return Container(
     color: ColorConstants.greenColor,
     child: Align(
@@ -145,7 +149,7 @@ Widget slideRightBackground(String? chatId, {bool unpinChat = false}) {
   );
 }
 
-Widget slideLeftBackground(String? chatId) {
+Widget slideLeftBackground() {
   return Container(
     color: Colors.red,
     child: Align(

@@ -17,7 +17,8 @@ class DeleteChatService {
     DeleteChatRequestModel requestModel = DeleteChatRequestModel(chatId: chatId);
     debugPrint("DeleteChatRequestModel:${requestModel.toJson()}");
     try {
-      var response = await Api().deleteRequest(context, ApiUrl.deleteChat, requestModel.toJson());
+      var response =
+          await Api().deleteRequest(context, ApiUrl.deleteChat, requestModel.toJson(), sendToken: true);
       debugPrint("DeleteChatResponse:$response");
       DeleteChatResponseModel responseModel = DeleteChatResponseModel.fromJson(response);
       debugPrint("DeleteChatResponseModel:${responseModel.toJson()}");

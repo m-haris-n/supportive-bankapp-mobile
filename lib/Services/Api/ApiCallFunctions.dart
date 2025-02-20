@@ -119,7 +119,7 @@ class Api {
       print(e.response);
       debugPrint(e.response!.data);
       ShowToast().showFlushBar(context, message: "${e.response!}", error: true);
-      return null;
+      return responseJson;
     }
   }
 

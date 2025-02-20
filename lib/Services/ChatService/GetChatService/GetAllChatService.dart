@@ -9,9 +9,10 @@ import 'package:supportive_app/Services/Api/ApiCallResponse.dart';
 import 'package:supportive_app/Utils/Constant/ApiUrl.dart';
 
 class GetAllChatService {
-  Future<ApiCallResponse<GetAllChatResponseModel>> callGetAllChatService(BuildContext context) async {
+  Future<ApiCallResponse<GetAllChatResponseModel>> callGetAllChatService(BuildContext context,
+      {bool isCallLoading = true}) async {
     try {
-      Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+      isCallLoading ? Provider.of<LoadingProvider>(context, listen: false).setLoading(true) : null;
       var response = await Api().getRequest(context, ApiUrl.getAllChat, sendToken: true);
       debugPrint("GetAllChatResponse: $response");
       GetAllChatResponseModel responseModel = GetAllChatResponseModel.fromJson(response);

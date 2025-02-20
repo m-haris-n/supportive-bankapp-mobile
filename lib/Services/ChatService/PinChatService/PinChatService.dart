@@ -17,7 +17,7 @@ class PinChatService {
     ChatPinRequestModel requestModel = ChatPinRequestModel(userId: userId, chatId: chatId);
     debugPrint("CreateChatRequestModel:${requestModel.toJson()}");
     try {
-      var response = await Api().postRequest(context, ApiUrl.pinChat, requestModel.toJson());
+      var response = await Api().postRequest(context, ApiUrl.pinChat, requestModel.toJson(), sendToken: true);
       debugPrint("ChatPinResponse:$response");
       ChatPinResponseModel responseModel = ChatPinResponseModel.fromJson(response);
       debugPrint("ChatPinResponseModel:${responseModel.toJson()}");
