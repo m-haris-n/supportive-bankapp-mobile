@@ -58,7 +58,7 @@ class CustomOutlineTextFormField extends StatelessWidget {
       maxLines: maxLines ?? 1,
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: keyboardType ?? TextInputType.text,
-      cursorColor: cursorColor ?? ColorConstants.whiteColor,
+      cursorColor: cursorColor ?? ColorConstants.blackColor,
       readOnly: readOnly ?? false,
       style: style ??
           TextStyle(

@@ -18,6 +18,19 @@ class ChatProvider extends ChangeNotifier {
 
   TextEditingController chatMessage = TextEditingController();
 
+  bool createNewChat = false;
+  String? chatId;
+
+  setCreateNewChatValue(bool value) {
+    createNewChat = value;
+    notifyListeners();
+  }
+
+  setChatId(String? chatIdValue) {
+    chatId = chatIdValue;
+    notifyListeners();
+  }
+
   setAllChatResponseModel(GetAllChatResponseModel response) {
     getAllChatResponse = response;
     notifyListeners();
@@ -28,6 +41,26 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setAddChatByIdResponse(ChatMessages chatMessage, String userId) {
+    ChatMessages message = ChatMessages(
+        id: "",
+        chatId: chatMessage.chatId,
+        message: chatMessage.message,
+        senderId: chatMessage.senderId,
+        createdAt: "${DateTime.now()}",
+        deletedAt: "${DateTime.now()}",
+        updatedAt: "${DateTime.now()}");
+    if (getChatByIdResponse != null) {
+      getChatByIdResponse?.data!.messages!.add(message);
+    } else {
+      getChatByIdResponse = GetChatByIdResponseModel(
+          success: true,
+          status: 200,
+          data: ChatDataById(id: message.chatId, userId: userId, messages: [message]));
+    }
+    notifyListeners();
+  }
+
   setCreateChatResponseModel(CreateChatResponseModel response) {
     createChatResponse = response;
     notifyListeners();
@@ -35,6 +68,18 @@ class ChatProvider extends ChangeNotifier {
 
   setSendChatMessageResponse(SendChatMessageResponseModel response) {
     sendChatMessageResponse = response;
+    if (sendChatMessageResponse != null &&
+        sendChatMessageResponse?.success == true &&
+        (sendChatMessageResponse!.status == 201 || sendChatMessageResponse!.status == 200)) {
+      var chatMessage = sendChatMessageResponse!.data;
+      setAddChatByIdResponse(
+          ChatMessages(
+              id: chatMessage!.id,
+              chatId: chatMessage.chatId,
+              message: chatMessage.message,
+              senderId: chatMessage.senderId),
+          "");
+    }
     notifyListeners();
   }
 
@@ -66,6 +111,15 @@ class ChatProvider extends ChangeNotifier {
 
   cleanChatBox() {
     chatMessage.clear();
+    notifyListeners();
+  }
+
+  reset() {
+    chatId = null;
+    createNewChat = false;
+    getChatByIdResponse = null;
+    chatMessage.clear();
+
     notifyListeners();
   }
 }

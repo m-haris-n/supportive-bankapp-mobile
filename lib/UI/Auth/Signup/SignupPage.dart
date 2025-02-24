@@ -16,6 +16,7 @@ import 'package:supportive_app/Services/AuthService/SignupService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
+import 'package:supportive_app/Utils/HelperFunction.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -95,12 +96,10 @@ class _SignupPageState extends State<SignupPage> {
                           CustomOutlineTextFormField(
                             hintText: "Password",
                             controller: authProvider.passwordController,
-                            obscureText: true,
+                            obscureText: authProvider.showPassword,
                             obscuringCharacter: "*",
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter your password.";
-                              }
+                              return validatePassword(value ?? "");
                             },
                             filled: true,
                             prefixIcon: Padding(
@@ -109,9 +108,14 @@ class _SignupPageState extends State<SignupPage> {
                                 AssetsImages.lockIcon,
                               ),
                             ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                authProvider.setShowPasswordValue("password");
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                              ),
                             ),
                             filledColor: ColorConstants.whiteColor,
                             borderSideColor: ColorConstants.whiteColor,

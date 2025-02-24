@@ -10,7 +10,7 @@ import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 
 Future<bool> confirmDismiss(context, direction, String? chatId,
     {bool unpinChat = false, bool swipePinChat = false}) async {
-  if (direction == DismissDirection.endToStart && swipePinChat == false) {
+  if (direction == DismissDirection.endToStart) {
     final bool res = await showDialog(
         context: context,
         builder: (BuildContext context) {

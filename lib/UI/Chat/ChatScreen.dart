@@ -6,21 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
 import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
+import 'package:supportive_app/Services/ChatService/CreateAndDeleteChatService/CreateChatService.dart';
 import 'package:supportive_app/Services/ChatService/GetChatService/GetAllChatService.dart';
-import 'package:supportive_app/Services/ChatService/GetChatService/GetChatByIdService.dart';
 import 'package:supportive_app/Services/ChatService/SendChatService/SendChatService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
-import 'package:supportive_app/Utils/HelperFunction.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
 import 'package:supportive_app/components/TextStyle/TextStyle.dart';
 
 class ChatScreen extends StatefulWidget {
-  var data;
-
-  ChatScreen({this.data});
-
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -41,8 +36,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (value) {
-      GetChatByIdService().callGetChatByIdService(context, chatId: widget.data["chat_id"]);
+    timer = Timer.periodic(Duration(seconds: 10), (value) {
+      // GetChatByIdService().callGetChatByIdService(context, chatId: widget.data["chat_id"]);
       GetAllChatService().callGetAllChatService(context, isCallLoading: false);
     });
 
@@ -79,7 +74,8 @@ class _ChatScreenState extends State<ChatScreen> {
         body: PopScope(
           canPop: true,
           onPopInvokedWithResult: (value, data) {
-            dispose();
+            chatProvider.reset();
+            dismissTimer();
           },
           child: CustomBackground(
             widget: Column(
@@ -101,49 +97,54 @@ class _ChatScreenState extends State<ChatScreen> {
                           )),
                       Center(
                         child: Text(
-                          "Hello, Ask Me\n  Anything...",
+                          "Hello, Ask Me\nAnything...",
                           style: AppTextStyle.poppinsBoldStyle,
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: Center(
-                          child: Text(
-                            "Last Updated: ${extractTime(chatData!.updatedAt!)}",
-                            style: AppTextStyle.poppinsLightStyle
-                                .copyWith(color: ColorConstants.textGreyColor, fontSize: 12.sp),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(vertical: 5.h),
+                      //   child: Center(
+                      //     child: Text(
+                      //       "Last Updated: ${extractTime(chatData!.updatedAt!)}",
+                      //       style: AppTextStyle.poppinsLightStyle
+                      //           .copyWith(color: ColorConstants.textGreyColor, fontSize: 12.sp),
+                      //     ),
+                      //   ),
+                      // ),
                       Expanded(
-                          child: ListView.builder(
-                              controller: _scrollController, // ✅ Attach Scroll Controller
+                          child: chatData != null
+                              ? ListView.builder(
+                                  controller: _scrollController, // ✅ Attach Scroll Controller
 
-                              itemCount: chatData.messages!.length,
+                                  itemCount: chatData.messages!.length,
                               itemBuilder: (context, index) {
                                 var message = chatData.messages![index];
-                                return Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(12.sp),
-                                  margin: EdgeInsets.symmetric(vertical: 10.h) +
-                                      EdgeInsets.only(
-                                          left: message.senderId != null ? 50.sp : 0,
-                                          right: message.senderId == null ? 50.sp : 0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12.sp),
-                                    color: message.senderId != null
-                                        ? ColorConstants.appPrimaryColor
-                                        : ColorConstants.whiteColor,
-                                  ),
-                                  child: Text(
-                                    textAlign: TextAlign.justify,
-                                    message.message ?? "",
-                                    style: AppTextStyle.poppinsLightStyle.copyWith(
-                                        fontSize: 12.sp,
-                                        color: message.senderId != null
-                                            ? ColorConstants.whiteColor
-                                            : ColorConstants.blackColor),
+                                return Align(
+                                  alignment: message.senderId != null
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  child: Container(
+                                    padding: EdgeInsets.all(12.sp),
+                                    margin: EdgeInsets.symmetric(vertical: 10.h) +
+                                        EdgeInsets.only(
+                                            left: message.senderId != null ? 50.sp : 0,
+                                            right: message.senderId == null ? 50.sp : 0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.sp),
+                                      color: message.senderId != null
+                                          ? ColorConstants.appPrimaryColor
+                                          : ColorConstants.whiteColor,
+                                    ),
+                                    child: Text(
+                                      textAlign: TextAlign.justify,
+                                      message.message ?? "",
+                                      style: AppTextStyle.poppinsLightStyle.copyWith(
+                                          fontSize: 12.sp,
+                                          color: message.senderId != null
+                                              ? ColorConstants.whiteColor
+                                              : ColorConstants.blackColor),
+                                    ),
                                   ),
                                 );
                                 // index == 0
@@ -169,7 +170,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 //         ],
                                 //       )
                                 //     : SizedBox(),
-                              })),
+                              })
+                              : SizedBox()),
                     ],
                   ),
                 )),
@@ -201,27 +203,60 @@ class _ChatScreenState extends State<ChatScreen> {
                               onTap: () {
                                 if (chatProvider.chatMessage.text.isNotEmpty) {
                                   loadingProvider.setLoading(true);
-                                  SendChatService()
-                                      .callSendChatService(
-                                          context, chatProvider.getChatByIdResponse!.data!.id)
-                                      .then((response) {
-                                    loadingProvider.setLoading(false);
+                                  if (chatProvider.createNewChat) {
+                                    CreateChatService().callCreateChatService(context).then((response) {
+                                      if (response!.responseData != null &&
+                                          response.responseData?.success == true &&
+                                          (response.responseData!.status == 201 ||
+                                              response.responseData!.status == 200)) {
+                                        chatProvider.setCreateNewChatValue(false);
+                                        chatProvider.setChatId(response.responseData!.data!.id);
 
-                                    chatProvider.cleanChatBox();
-                                    if (response!.responseData != null &&
-                                        response.responseData?.success == true &&
-                                        (response.responseData!.status == 201 ||
-                                            response.responseData!.status == 200)) {
-                                      /// ✅ Scroll to Bottom after sending message
-                                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                                        _scrollToBottom();
-                                      });
-                                    } else {
-                                      ShowToast().showFlushBar(context,
-                                          message: "Chat can't be send. They are some server issue",
-                                          error: true);
-                                    }
-                                  });
+                                        SendChatService()
+                                            .callSendChatService(context, response.responseData!.data!.id)
+                                            .then((response) {
+                                          loadingProvider.setLoading(false);
+                                          chatProvider.cleanChatBox();
+                                          if (response!.responseData != null &&
+                                              response.responseData?.success == true &&
+                                              (response.responseData!.status == 201 ||
+                                                  response.responseData!.status == 200)) {
+                                            /// ✅ Scroll to Bottom after sending message
+                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                                              _scrollToBottom();
+                                            });
+                                          } else {
+                                            loadingProvider.setLoading(false);
+                                            ShowToast().showFlushBar(context,
+                                                message: "Chat can't be send. They are some server issue",
+                                                error: true);
+                                          }
+                                        });
+                                      } else {
+                                        loadingProvider.setLoading(false);
+                                      }
+                                    });
+                                  } else {
+                                    SendChatService()
+                                        .callSendChatService(context, chatProvider.chatId)
+                                        .then((response) {
+                                      chatProvider.cleanChatBox();
+                                      loadingProvider.setLoading(false);
+                                      if (response!.responseData != null &&
+                                          response.responseData?.success == true &&
+                                          (response.responseData!.status == 201 ||
+                                              response.responseData!.status == 200)) {
+                                        /// ✅ Scroll to Bottom after sending message
+                                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                                          _scrollToBottom();
+                                        });
+                                      } else {
+                                        ShowToast().showFlushBar(context,
+                                            message: "Chat can't be send. They are some server issue",
+                                            error: true);
+                                      }
+                                    });
+                                  }
                                 }
                               },
                               child: SvgPicture.asset(AssetsImages.sendChatIcon))

@@ -20,6 +20,21 @@ class AuthProvider extends ChangeNotifier {
   UpdateProfileResponseModel? updateProfileResponse;
   ChangePasswordResponseModel? changePasswordResponse;
 
+  bool showOldPassword = true;
+  bool showPassword = true;
+  bool showConfirmPassword = true;
+
+  setShowPasswordValue(String? type) {
+    if (type == "old_password") {
+      showOldPassword = !showOldPassword;
+    } else if (type == "password") {
+      showPassword = !showPassword;
+    } else if (type == "confirm_password") {
+      showConfirmPassword = !showConfirmPassword;
+    }
+    notifyListeners();
+  }
+
   setLoginResponse(LoginResponseModel data) {
     loginResponse = data;
     notifyListeners();

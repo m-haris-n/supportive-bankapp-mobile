@@ -1,6 +1,6 @@
 class GetChatByIdResponseModel {
   bool? success;
-  Data? data;
+  ChatDataById? data;
   int? status;
   String? error;
 
@@ -8,7 +8,7 @@ class GetChatByIdResponseModel {
 
   GetChatByIdResponseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new ChatDataById.fromJson(json['data']) : null;
     status = json['status'];
     error = json['error'];
   }
@@ -25,26 +25,26 @@ class GetChatByIdResponseModel {
   }
 }
 
-class Data {
+class ChatDataById {
   String? id;
   String? userId;
   dynamic deletedAt;
   String? createdAt;
   String? updatedAt;
-  List<Messages>? messages;
+  List<ChatMessages>? messages;
 
-  Data({this.id, this.userId, this.deletedAt, this.createdAt, this.updatedAt, this.messages});
+  ChatDataById({this.id, this.userId, this.deletedAt, this.createdAt, this.updatedAt, this.messages});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ChatDataById.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     deletedAt = json['deletedAt'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     if (json['messages'] != null) {
-      messages = <Messages>[];
+      messages = <ChatMessages>[];
       json['messages'].forEach((v) {
-        messages!.add(new Messages.fromJson(v));
+        messages!.add(new ChatMessages.fromJson(v));
       });
     }
   }
@@ -63,7 +63,7 @@ class Data {
   }
 }
 
-class Messages {
+class ChatMessages {
   String? id;
   String? chatId;
   dynamic senderId;
@@ -72,10 +72,10 @@ class Messages {
   String? createdAt;
   String? updatedAt;
 
-  Messages(
+  ChatMessages(
       {this.id, this.chatId, this.senderId, this.message, this.deletedAt, this.createdAt, this.updatedAt});
 
-  Messages.fromJson(Map<String, dynamic> json) {
+  ChatMessages.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     chatId = json['chat_id'];
     senderId = json['sender_id'];

@@ -32,7 +32,7 @@ class PlaidAuth extends StatelessWidget {
                   style: AppTextStyle.poppinsBoldStyle.copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
                 ),
                 CustomAppButton(
-                  title: "Plaid",
+                  title: "Connect with Plaid",
                   btnColor: ColorConstants.whiteColor,
                   textColor: ColorConstants.blackColor,
                   btnIcon: Image.asset(

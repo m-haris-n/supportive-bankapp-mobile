@@ -5,6 +5,7 @@ import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
 import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
 import 'package:supportive_app/Utils/Constant/ApiUrl.dart';
 import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
+import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 import 'ApiCallExceptions.dart';
 
 class Api {
@@ -36,7 +37,15 @@ class Api {
       debugPrint("Get Api Call Error: $e");
       debugPrint("Get Api Call Error: ${e.error}");
       debugPrint("Get Api Call Error Response: ${e.response}");
+      debugPrint("Get Api Call Error Response: ${e.response!.data["error"]}");
       ShowToast().showFlushBar(context, message: "${e.response!}", error: true);
+      if (e.response!.data["error"].toString() == "Invalid or expired token") {
+        await SharedPreferencesService().remove(KeysConstant.userId);
+        await SharedPreferencesService().remove(KeysConstant.accessToken);
+        Future.delayed(Duration(milliseconds: 1500), () {
+          Navigator.of(context).pushNamedAndRemoveUntil(RouteConstant.login, (route) => false);
+        });
+      }
     }
   }
 

@@ -51,41 +51,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ],
                   ),
-                  Stack(
-                    alignment: AlignmentDirectional.topStart,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 120.h,
-                          width: 133.w,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(
-                            child: Image.network(
-                              "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2ZpbGUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Container(
-                          height: 120.h,
-                          width: 133.w,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: ColorConstants.whiteColor.withOpacity(0.6)),
-                          child: Center(
-                              child: Text(
-                            "Edit",
-                            style: AppTextStyle.poppinsBoldStyle.copyWith(color: ColorConstants.whiteColor),
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Stack(
+                  //   alignment: AlignmentDirectional.topStart,
+                  //   children: [
+                  //     Center(
+                  //       child: Container(
+                  //         height: 120.h,
+                  //         width: 133.w,
+                  //         decoration: const BoxDecoration(
+                  //           shape: BoxShape.circle,
+                  //         ),
+                  //         child: ClipOval(
+                  //           child: Image.network(
+                  //             "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2ZpbGUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
+                  //             fit: BoxFit.cover,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Center(
+                  //       child: Container(
+                  //         height: 120.h,
+                  //         width: 133.w,
+                  //         decoration: BoxDecoration(
+                  //             shape: BoxShape.circle, color: ColorConstants.whiteColor.withOpacity(0.6)),
+                  //         child: Center(
+                  //             child: Text(
+                  //           "Edit",
+                  //           style: AppTextStyle.poppinsBoldStyle.copyWith(color: ColorConstants.whiteColor),
+                  //         )),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
-                    height: 15.sp,
+                    height: 80.sp,
                   ),
                   CustomOutlineTextFormField(
                     hintText: "First name",

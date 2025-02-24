@@ -31,7 +31,6 @@ class RouteGenerator {
       case RouteConstant.chatScreen:
         return PageTransition(
             child: ChatScreen(
-              data: args,
             ),
             type: PageTransitionType.fade,
             duration: animationDuration);

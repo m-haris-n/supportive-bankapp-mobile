@@ -7,15 +7,14 @@ var poppinsMedium = "PoppinsMedium";
 var poppinsRegular = "PoppinsRegular";
 var poppinsLight = "PoppinsLight";
 
-class AppTextStyle{
-
- static  var poppinsBoldStyle = TextStyle(
+class AppTextStyle {
+  static TextStyle poppinsBoldStyle = TextStyle(
     color: ColorConstants.blackColor,
     fontWeight: FontWeight.w600,
     fontFamily: poppinsBold,
     fontSize: 24.sp,
   );
- static var poppinsLightStyle = TextStyle(
+  static TextStyle poppinsLightStyle = TextStyle(
     color: ColorConstants.textGreyColor,
     fontWeight: FontWeight.normal,
     fontFamily: poppinsLight,

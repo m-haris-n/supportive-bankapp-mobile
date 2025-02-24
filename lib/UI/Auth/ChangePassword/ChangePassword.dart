@@ -9,6 +9,7 @@ import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/AuthService/ChangePasswordService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
+import 'package:supportive_app/Utils/HelperFunction.dart';
 import 'package:supportive_app/components/CustomAppButton/CustomAppButton.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
@@ -63,15 +64,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       controller: authProvider.oldPasswordController,
                       filledColor: ColorConstants.whiteColor,
                       filled: true,
+                      obscureText: authProvider.showOldPassword,
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SvgPicture.asset(AssetsImages.changePasswordIcon),
                       ),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                        child: InkWell(
+                            onTap: () {
+                              authProvider.setShowPasswordValue("old_password");
+                            },
+                            child: SvgPicture.asset(AssetsImages.passwordEyeIcon)),
                       ),
-                      validator: (value) => value!.isNotEmpty ? null : "Please write old password",
+                      validator: (value) {
+                        return validatePassword(value ?? "");
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -80,15 +88,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         controller: authProvider.passwordController,
                         filledColor: ColorConstants.whiteColor,
                         filled: true,
+                        obscureText: authProvider.showPassword,
                         prefixIcon: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: SvgPicture.asset(AssetsImages.changePasswordIcon),
                         ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                          child: InkWell(
+                              onTap: () {
+                                authProvider.setShowPasswordValue("password");
+                              },
+                              child: SvgPicture.asset(AssetsImages.passwordEyeIcon)),
                         ),
-                        validator: (value) => value!.isNotEmpty ? null : "Please write password",
+                        validator: (value) {
+                          return validatePassword(value ?? "");
+                        },
                       ),
                     ),
                     CustomOutlineTextFormField(
@@ -96,15 +111,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       controller: authProvider.confirmPasswordController,
                       filledColor: ColorConstants.whiteColor,
                       filled: true,
+                      obscureText: authProvider.showConfirmPassword,
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SvgPicture.asset(AssetsImages.changePasswordIcon),
                       ),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                        child: InkWell(
+                            onTap: () {
+                              authProvider.setShowPasswordValue("confirm_password");
+                            },
+                            child: SvgPicture.asset(AssetsImages.passwordEyeIcon)),
                       ),
-                      validator: (value) => value!.isNotEmpty ? null : "Please write confirm password",
+                      validator: (value) {
+                        return validatePassword(value ?? "");
+                      },
                     ),
                     SizedBox(
                       height: 40.h,

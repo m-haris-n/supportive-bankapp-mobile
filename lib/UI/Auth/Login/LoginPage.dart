@@ -102,11 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             child: CustomOutlineTextFormField(
                               hintText: "Password",
+                              obscureText: authProvider.showPassword,
                               controller: authProvider.passwordController,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Password field is empty.";
                                 }
+                                return null;
                               },
                               filled: true,
                               prefixIcon: Padding(
@@ -115,9 +117,14 @@ class _LoginPageState extends State<LoginPage> {
                                   AssetsImages.lockIcon,
                                 ),
                               ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  authProvider.setShowPasswordValue("password");
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: SvgPicture.asset(AssetsImages.passwordEyeIcon),
+                                ),
                               ),
                               filledColor: ColorConstants.whiteColor,
                               borderSideColor: ColorConstants.whiteColor,
