@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
-import 'package:supportive_app/components/CustomAppButton/CustomAppButton.dart';
+import 'package:supportive_app/Components/CustomAppButton/CustomAppButton.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 
 class ResetPasswordCodePage extends StatefulWidget {
@@ -61,7 +61,7 @@ class _ResetPasswordCodePageState extends State<ResetPasswordCodePage> {
                     )),
                 Text(
                   "Otp Verification",
-                  style: AppTextStyle.poppinsBoldStyle,
+                  style: AppTextStyle().poppinsBoldStyle(),
                 ),
               ],
             ),
@@ -69,8 +69,7 @@ class _ResetPasswordCodePageState extends State<ResetPasswordCodePage> {
               padding:  EdgeInsets.symmetric(vertical: 20.h),
               child: Text(
                 "Enter the verification code we just sent on your email address.",
-                style: AppTextStyle.poppinsLightStyle.copyWith(
-                    fontSize: 16.sp
+                style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 16.sp
                 ),
               ),
             ),

@@ -47,7 +47,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           )),
                       Text(
                         "Edit Profile",
-                        style: AppTextStyle.poppinsBoldStyle,
+                        style: AppTextStyle().poppinsBoldStyle(),
                       ),
                     ],
                   ),

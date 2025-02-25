@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 
 class CustomAppButton extends StatelessWidget {
@@ -57,8 +57,9 @@ class CustomAppButton extends StatelessWidget {
           btnIcon??SizedBox(),
          textWidget ==null? Text(
             title??"",
-            style: style ?? AppTextStyle.poppinsBoldStyle.copyWith(
-              fontSize: fontSize?? 14.sp,
+                  style: style ??
+                      AppTextStyle().poppinsBoldStyle().copyWith(
+                          fontSize: fontSize?? 14.sp,
               fontWeight: fontWeight?? FontWeight.w500,
               fontFamily: fontFamily??poppinsBold,
               color: textColor??ColorConstants.whiteColor

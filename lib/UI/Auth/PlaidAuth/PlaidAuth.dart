@@ -29,7 +29,9 @@ class PlaidAuth extends StatelessWidget {
                 Text(
                   "Hello, Ask Me \nAnything...",
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.poppinsBoldStyle.copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
+                  style: AppTextStyle()
+                      .poppinsBoldStyle()
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
                 ),
                 CustomAppButton(
                   title: "Connect with Plaid",

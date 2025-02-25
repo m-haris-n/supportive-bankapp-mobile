@@ -46,14 +46,14 @@ class _SignupPageState extends State<SignupPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Sign up", style: AppTextStyle.poppinsBoldStyle),
+                          Text("Sign up", style: AppTextStyle().poppinsBoldStyle()),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 "Access to your\naccount",
-                                style: AppTextStyle.poppinsLightStyle,
+                                style: AppTextStyle().poppinsLightStyle(),
                               ),
                               Image.asset(
                                 AssetsImages.botImage,
@@ -158,7 +158,7 @@ class _SignupPageState extends State<SignupPage> {
                   Text.rich(
                     TextSpan(
                         text: "Already have an account?",
-                        style: AppTextStyle.poppinsLightStyle,
+                        style: AppTextStyle().poppinsLightStyle(),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.of(context).pop();
@@ -166,7 +166,8 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                           TextSpan(
                             text: " Sign in",
-                            style: AppTextStyle.poppinsLightStyle
+                            style: AppTextStyle()
+                                .poppinsLightStyle()
                                 .copyWith(color: ColorConstants.appPrimaryColor, fontSize: 16.sp),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

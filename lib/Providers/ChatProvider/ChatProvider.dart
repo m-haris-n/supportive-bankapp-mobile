@@ -109,6 +109,20 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  pinAndUnPinChat(String? chatId, {bool isPinChat = false}) {
+    if (isPinChat) {
+      var chatData = getAllChatResponse!.data!.pinnedChats!.where((element) => element.id == chatId).first;
+      getAllChatResponse!.data!.chats!.add(chatData);
+      getAllChatResponse!.data!.pinnedChats!.removeWhere((element) => element.id == chatId);
+    } else {
+      var chatData = getAllChatResponse!.data!.chats!.where((element) => element.id == chatId).first;
+      getAllChatResponse!.data!.pinnedChats!.add(chatData);
+      getAllChatResponse!.data!.chats!.removeWhere((element) => element.id == chatId);
+    }
+
+    notifyListeners();
+  }
+
   cleanChatBox() {
     chatMessage.clear();
     notifyListeners();
@@ -122,4 +136,6 @@ class ChatProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  List<String> settingPopUp = ["Edit Profile", "Change Password", "Log Out"];
 }

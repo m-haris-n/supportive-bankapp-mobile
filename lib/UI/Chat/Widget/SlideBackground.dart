@@ -93,6 +93,8 @@ Future<bool> confirmDismiss(context, direction, String? chatId,
                       if (response!.responseData != null &&
                           response.responseData?.success == true &&
                           (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                        Provider.of<ChatProvider>(context, listen: false)
+                            .pinAndUnPinChat(chatId, isPinChat: swipePinChat);
                         Navigator.of(context).pop(false);
                       } else {
                         ShowToast().showFlushBar(context,
@@ -108,6 +110,8 @@ Future<bool> confirmDismiss(context, direction, String? chatId,
                       if (response!.responseData != null &&
                           response.responseData?.success == true &&
                           (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                        Provider.of<ChatProvider>(context, listen: false)
+                            .pinAndUnPinChat(chatId, isPinChat: swipePinChat);
                         Navigator.of(context).pop(false);
                       } else {
                         ShowToast().showFlushBar(context,

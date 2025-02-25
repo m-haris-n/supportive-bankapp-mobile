@@ -13,7 +13,7 @@ import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -98,7 +98,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       Center(
                         child: Text(
                           "Hello, Ask Me\nAnything...",
-                          style: AppTextStyle.poppinsBoldStyle,
+                          style: AppTextStyle().poppinsBoldStyle(),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -139,8 +139,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: Text(
                                       textAlign: TextAlign.justify,
                                       message.message ?? "",
-                                      style: AppTextStyle.poppinsLightStyle.copyWith(
-                                          fontSize: 12.sp,
+                                          style: AppTextStyle().poppinsLightStyle().copyWith(
+                                              fontSize: 12.sp,
                                           color: message.senderId != null
                                               ? ColorConstants.whiteColor
                                               : ColorConstants.blackColor),

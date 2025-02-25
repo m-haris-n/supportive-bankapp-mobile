@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 
 class CustomOutlineTextFormField extends StatelessWidget {
   TextEditingController? controller;

@@ -8,16 +8,17 @@ var poppinsRegular = "PoppinsRegular";
 var poppinsLight = "PoppinsLight";
 
 class AppTextStyle {
-  static TextStyle poppinsBoldStyle = TextStyle(
-    color: ColorConstants.blackColor,
-    fontWeight: FontWeight.w600,
-    fontFamily: poppinsBold,
-    fontSize: 24.sp,
-  );
-  static TextStyle poppinsLightStyle = TextStyle(
-    color: ColorConstants.textGreyColor,
-    fontWeight: FontWeight.normal,
-    fontFamily: poppinsLight,
-    fontSize: 14.sp,
-  );
+  TextStyle poppinsBoldStyle() => TextStyle(
+        color: ColorConstants.blackColor,
+        fontWeight: FontWeight.w600,
+        fontFamily: poppinsBold,
+        fontSize: 24.sp,
+      );
+
+  TextStyle poppinsLightStyle() => TextStyle(
+        color: ColorConstants.textGreyColor,
+        fontWeight: FontWeight.normal,
+        fontFamily: poppinsLight,
+        fontSize: 14.sp,
+      );
 }

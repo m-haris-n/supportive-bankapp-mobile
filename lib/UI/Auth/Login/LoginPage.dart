@@ -17,7 +17,7 @@ import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 import 'package:supportive_app/components/CustomAppButton/CustomAppButton.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -68,14 +68,14 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Sign in", style: AppTextStyle.poppinsBoldStyle),
+                          Text("Sign in", style: AppTextStyle().poppinsBoldStyle()),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 "Access to your\naccount",
-                                style: AppTextStyle.poppinsLightStyle,
+                                style: AppTextStyle().poppinsLightStyle(),
                               ),
                               Image.asset(
                                 AssetsImages.botImage,
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: Text(
                                 "Forgot Password?",
-                                style: AppTextStyle.poppinsLightStyle.copyWith(color: Colors.red),
+                                style: AppTextStyle().poppinsLightStyle().copyWith(color: Colors.red),
                                 textAlign: TextAlign.end,
                               ),
                             ),
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text.rich(
                     TextSpan(
                         text: "Not have an account?",
-                        style: AppTextStyle.poppinsLightStyle,
+                        style: AppTextStyle().poppinsLightStyle(),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.of(context).pushNamed(RouteConstant.signupPageRoute);
@@ -201,7 +201,8 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextSpan(
                             text: " Sign up",
-                            style: AppTextStyle.poppinsLightStyle
+                            style: AppTextStyle()
+                                .poppinsLightStyle()
                                 .copyWith(color: ColorConstants.appPrimaryColor, fontSize: 16.sp),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

@@ -13,7 +13,7 @@ import 'package:supportive_app/Utils/HelperFunction.dart';
 import 'package:supportive_app/components/CustomAppButton/CustomAppButton.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
 import 'package:supportive_app/components/CustomOutlineTextField/CustomOutlineTextField.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -52,7 +52,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             )),
                         Text(
                           "Change Password",
-                          style: AppTextStyle.poppinsBoldStyle,
+                          style: TextStyle(
+                            color: ColorConstants.blackColor,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: poppinsBold,
+                            fontSize: 24.sp,
+                          ),
                         ),
                       ],
                     ),

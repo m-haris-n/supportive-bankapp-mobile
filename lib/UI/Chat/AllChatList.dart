@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:supportive_app/Components/AppLoader/ShowLoaderLayer.dart';
 import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
+import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 import 'package:supportive_app/Models/ChatModel/GetChatModel/GetAllChatResponseModel.dart';
 import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/AuthService/GetUserProfileService.dart';
-import 'package:supportive_app/Services/ChatService/CreateAndDeleteChatService/CreateChatService.dart';
 import 'package:supportive_app/Services/ChatService/GetChatService/GetAllChatService.dart';
 import 'package:supportive_app/Services/ChatService/GetChatService/GetChatByIdService.dart';
 import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
@@ -20,7 +20,6 @@ import 'package:supportive_app/Utils/Constant/KeysConstant.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
 import 'package:supportive_app/Utils/HelperFunction.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
-import 'package:supportive_app/components/TextStyle/TextStyle.dart';
 
 class AllChatListPage extends StatefulWidget {
   const AllChatListPage({super.key});
@@ -86,7 +85,12 @@ class _AllChatListPageState extends State<AllChatListPage> {
                           children: [
                             Text(
                               "Conversation",
-                              style: AppTextStyle.poppinsBoldStyle,
+                              style: TextStyle(
+                                color: ColorConstants.blackColor,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: poppinsBold,
+                                fontSize: 24.sp,
+                              ),
                             ),
                             InkWell(
                               onTap: () {
@@ -112,162 +116,160 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                   chatProvider.setChatId(null);
 
                                   Navigator.of(context).pushNamed(RouteConstant.chatScreen);
-                                      // loadingProvider.setLoading(true);
-                                      // CreateChatService().callCreateChatService(context).then((response) {
-                                      //   if (response!.responseData != null &&
-                                      //       response.responseData?.success == true &&
-                                      //       (response.responseData!.status == 201 ||
-                                      //           response.responseData!.status == 200)) {
-                                      //     ShowToast()
-                                      //         .showFlushBar(context, message: "New chat create successfully");
-                                      //
-                                      //     Future.delayed(Duration(seconds: 1), () {
-                                      //       GetChatByIdService()
-                                      //           .callGetChatByIdService(context,
-                                      //               chatId: response.responseData!.data!.id)
-                                      //           .then((response) {
-                                      //         loadingProvider.setLoading(false);
-                                      //         if (response.responseData != null &&
-                                      //             response.responseData?.success == true &&
-                                      //             (response.responseData!.status == 201 ||
-                                      //                 response.responseData!.status == 200)) {
-                                      //           Navigator.of(context).pushNamed(RouteConstant.chatScreen,
-                                      //               arguments: {
-                                      //                 "chat_id": response.responseData!.data!.id,
-                                      //                 "create_new_chat": true
-                                      //               });
-                                      //         } else {
-                                      //           ShowToast().showFlushBar(context,
-                                      //               message:
-                                      //                   "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
-                                      //               error: true);
-                                      //         }
-                                      //       });
-                                      //     });
-                                      //   } else {
-                                      //     loadingProvider.setLoading(false);
-                                      //     ShowToast()
-                                      //         .showFlushBar(context, message: "Chat not create", error: true);
-                                      //   }
-                                      // });
-                                    },
-                                    child: Container(
-                                      width: 145.w,
-                                      height: 45.h,
-                                      margin: EdgeInsets.symmetric(vertical: 15.h),
-                                      padding: EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(30.sp),
-                                          color: ColorConstants.appPrimaryColor),
-                                      child: Row(
-                                        spacing: 10.sp,
-                                        children: [
-                                          Container(
-                                              height: 24.w,
-                                              width: 24.w,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle, color: ColorConstants.whiteColor),
-                                              child: Center(
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    size: 18.sp,
-                                                    color: ColorConstants.blackColor,
-                                                  ))),
-                                          Text(
-                                            "New Chat",
-                                            style: AppTextStyle.poppinsLightStyle
-                                                .copyWith(color: ColorConstants.whiteColor),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                  // loadingProvider.setLoading(true);
+                                  // CreateChatService().callCreateChatService(context).then((response) {
+                                  //   if (response!.responseData != null &&
+                                  //       response.responseData?.success == true &&
+                                  //       (response.responseData!.status == 201 ||
+                                  //           response.responseData!.status == 200)) {
+                                  //     ShowToast()
+                                  //         .showFlushBar(context, message: "New chat create successfully");
+                                  //
+                                  //     Future.delayed(Duration(seconds: 1), () {
+                                  //       GetChatByIdService()
+                                  //           .callGetChatByIdService(context,
+                                  //               chatId: response.responseData!.data!.id)
+                                  //           .then((response) {
+                                  //         loadingProvider.setLoading(false);
+                                  //         if (response.responseData != null &&
+                                  //             response.responseData?.success == true &&
+                                  //             (response.responseData!.status == 201 ||
+                                  //                 response.responseData!.status == 200)) {
+                                  //           Navigator.of(context).pushNamed(RouteConstant.chatScreen,
+                                  //               arguments: {
+                                  //                 "chat_id": response.responseData!.data!.id,
+                                  //                 "create_new_chat": true
+                                  //               });
+                                  //         } else {
+                                  //           ShowToast().showFlushBar(context,
+                                  //               message:
+                                  //                   "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
+                                  //               error: true);
+                                  //         }
+                                  //       });
+                                  //     });
+                                  //   } else {
+                                  //     loadingProvider.setLoading(false);
+                                  //     ShowToast()
+                                  //         .showFlushBar(context, message: "Chat not create", error: true);
+                                  //   }
+                                  // });
+                                },
+                                child: Container(
+                                  width: 145.w,
+                                  height: 45.h,
+                                  margin: EdgeInsets.symmetric(vertical: 15.h),
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.sp),
+                                      color: ColorConstants.appPrimaryColor),
+                                  child: Row(
+                                    spacing: 10.sp,
+                                    children: [
+                                      Container(
+                                          height: 24.w,
+                                          width: 24.w,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle, color: ColorConstants.whiteColor),
+                                          child: Center(
+                                              child: Icon(
+                                            Icons.add,
+                                            size: 18.sp,
+                                            color: ColorConstants.blackColor,
+                                          ))),
+                                      Text("New Chat",
+                                          style: TextStyle(
+                                            color: ColorConstants.whiteColor,
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: poppinsLight,
+                                            fontSize: 14.sp,
+                                          ))
+                                    ],
                                   ),
                                 ),
-                                pinnedChats != [] && pinnedChats.isNotEmpty
-                                    ? Text(
-                                  "Pin Chat",
-                                  style: AppTextStyle.poppinsLightStyle.copyWith(
-                                      color: ColorConstants.blackColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp),
-                                )
-                                    : SizedBox(),
-                                pinnedChats != [] && pinnedChats.isNotEmpty
-                                    ? _pinChatList(context, pinnedChats, chatProvider)
-                                    : SizedBox(),
-                                recentChats != [] && recentChats.isNotEmpty
-                                    ? Text(
-                                  "Chats",
-                                  style: AppTextStyle.poppinsLightStyle.copyWith(
-                                      color: ColorConstants.blackColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp),
-                                )
-                                    : SizedBox(),
-                                recentChats != [] && recentChats.isNotEmpty
-                                    ? _recentChatList(context, recentChats, chatProvider)
-                                    : SizedBox()
-                              ],
-                            )),
+                              ),
+                            ),
+                            pinnedChats != [] && pinnedChats.isNotEmpty
+                                ? Text(
+                                    "Pin Chat",
+                                    style: AppTextStyle().poppinsLightStyle().copyWith(
+                                        color: ColorConstants.blackColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.sp),
+                                  )
+                                : SizedBox(),
+                            pinnedChats != [] && pinnedChats.isNotEmpty
+                                ? _pinChatList(context, pinnedChats, chatProvider)
+                                : SizedBox(),
+                            recentChats != [] && recentChats.isNotEmpty
+                                ? Text(
+                                    "Chats",
+                                    style: AppTextStyle().poppinsLightStyle().copyWith(
+                                        color: ColorConstants.blackColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.sp),
+                                  )
+                                : SizedBox(),
+                            recentChats != [] && recentChats.isNotEmpty
+                                ? _recentChatList(context, recentChats, chatProvider)
+                                : SizedBox()
+                          ],
+                        )),
                       ],
                     ),
                     !isVisible!
                         ? SizedBox()
                         : Visibility(
-                      visible: isVisible!,
-                      child: Container(
-                        height: 95.h,
-                        width: 140.w,
-                        margin: EdgeInsets.only(top: 30.h, right: 30.w),
-                        padding: EdgeInsets.all(8.sp),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.sp),
-                            color: ColorConstants.whiteColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: Offset(0, 2),
-                                  color: ColorConstants.textGreyColor,
-                                  blurRadius: 6)
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(RouteConstant.editProfilePage);
-                              },
-                              child: Text(
-                                "Edit Profile",
-                                style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp),
+                            visible: isVisible!,
+                            child: Container(
+                              height: 95.h,
+                              width: 140.w,
+                              margin: EdgeInsets.only(top: 30.h, right: 30.w),
+                              padding: EdgeInsets.all(8.sp),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: ColorConstants.whiteColor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0, 2),
+                                        color: ColorConstants.textGreyColor,
+                                        blurRadius: 6)
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: List.generate(chatProvider.settingPopUp.length, (index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      if (index == 0) {
+                                        Navigator.of(context).pushNamed(RouteConstant.editProfilePage);
+                                      } else if (index == 1) {
+                                        Navigator.of(context).pushNamed(RouteConstant.changePasswordPage);
+                                      } else {
+                                        SharedPreferencesService().remove(KeysConstant.userId);
+                                        SharedPreferencesService().remove(KeysConstant.accessToken);
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, RouteConstant.login, (route) => false);
+                                      }
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          "${chatProvider.settingPopUp[index]}",
+                                          style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp),
+                                        ),
+                                        chatProvider.settingPopUp.length == index + 1
+                                            ? SizedBox()
+                                            : Divider(),
+                                      ],
+                                    ),
+                                  );
+                                }),
                               ),
                             ),
-                            Divider(),
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(RouteConstant.changePasswordPage);
-                              },
-                              child: Text(
-                                "Change Password",
-                                style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp),
-                              ),
-                            ),
-                            Divider(),
-                            InkWell(
-                              onTap: () {
-                                SharedPreferencesService().remove(KeysConstant.userId);
-                                SharedPreferencesService().remove(KeysConstant.accessToken);
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, RouteConstant.login, (route) => false);
-                              },
-                              child: Text(
-                                "Log Out",
-                                style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                          )
                   ],
                 ),
               ),
@@ -343,17 +345,19 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                   children: [
                                     Text(
                                       chatMessage.first.message!,
-                                      style: AppTextStyle.poppinsLightStyle
+                                      style: AppTextStyle()
+                                          .poppinsLightStyle()
                                           .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
                                     ),
                                     Text(chatMessage.first.message!,
-                                        style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp)),
+                                        style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
                                   ],
                                 ),
                               ),
                               Text(
                                 extractTime(chatMessage.first.createdAt!),
-                                style: AppTextStyle.poppinsLightStyle
+                                style: AppTextStyle()
+                                    .poppinsLightStyle()
                                     .copyWith(color: ColorConstants.textGreyColor),
                               )
                             ],
@@ -436,17 +440,19 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                   children: [
                                     Text(
                                       chatMessage.first.message!,
-                                      style: AppTextStyle.poppinsLightStyle
+                                      style: AppTextStyle()
+                                          .poppinsLightStyle()
                                           .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
                                     ),
                                     Text(chatMessage.first.message!,
-                                        style: AppTextStyle.poppinsLightStyle.copyWith(fontSize: 12.sp)),
+                                        style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
                                   ],
                                 ),
                               ),
                               Text(
                                 extractTime(chatMessage.first.createdAt!),
-                                style: AppTextStyle.poppinsLightStyle
+                                style: AppTextStyle()
+                                    .poppinsLightStyle()
                                     .copyWith(color: ColorConstants.textGreyColor),
                               )
                             ],

@@ -43,7 +43,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         )),
                     Text(
                       "Forgot Password",
-                      style: AppTextStyle.poppinsBoldStyle,
+                      style: AppTextStyle().poppinsBoldStyle(),
                     ),
                   ],
                 ),
@@ -52,7 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 Text(
                   "Enter your email and we sent you a link on your email to reset your password.",
-                  style: AppTextStyle.poppinsLightStyle,
+                  style: AppTextStyle().poppinsLightStyle(),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 50.h),
