@@ -20,9 +20,6 @@ class SendChatService {
       SendChatMessageRequestModel requestModel = SendChatMessageRequestModel(
           senderId: userId, chatId: chatId, message: chatProvider.chatMessage.text);
       debugPrint("SendChatMessageRequestModel:${requestModel.toJson()}");
-      chatProvider.setAddChatByIdResponse(
-          ChatMessages(id: "", chatId: chatId, message: chatProvider.chatMessage.text, senderId: userId),
-          userId!);
       var response =
           await Api().postRequest(context, ApiUrl.sendMessage, requestModel.toJson(), sendToken: true);
       debugPrint("SendChatMessageResponse:$response");

@@ -15,6 +15,7 @@ class LoginService{
     var authProvider = Provider.of<AuthProvider>(context, listen: false);
     LoginRequestModel requestModel = LoginRequestModel(
         email: authProvider.emailController.text.trim(), password: authProvider.passwordController.text);
+    debugPrint("LoginRequestModel:${requestModel.toJson()}");
     try{
       var response = await Api().postRequest(context,ApiUrl.login, requestModel.toJson());
       debugPrint("LoginApiResponse:$response");

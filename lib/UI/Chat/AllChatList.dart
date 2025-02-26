@@ -12,7 +12,7 @@ import 'package:supportive_app/Services/AuthService/GetUserProfileService.dart';
 import 'package:supportive_app/Services/ChatService/GetChatService/GetAllChatService.dart';
 import 'package:supportive_app/Services/ChatService/GetChatService/GetChatByIdService.dart';
 import 'package:supportive_app/Services/SharePreferencesService/SharePreferenceService.dart';
-import 'package:supportive_app/UI/Chat/Widget/SlideBackground.dart';
+import 'package:supportive_app/UI/Chat/Widget/ShowPinOrDeleteBottomSheet.dart';
 import 'package:supportive_app/Utils/Constant/AppIcons.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
@@ -116,44 +116,6 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                   chatProvider.setChatId(null);
 
                                   Navigator.of(context).pushNamed(RouteConstant.chatScreen);
-                                  // loadingProvider.setLoading(true);
-                                  // CreateChatService().callCreateChatService(context).then((response) {
-                                  //   if (response!.responseData != null &&
-                                  //       response.responseData?.success == true &&
-                                  //       (response.responseData!.status == 201 ||
-                                  //           response.responseData!.status == 200)) {
-                                  //     ShowToast()
-                                  //         .showFlushBar(context, message: "New chat create successfully");
-                                  //
-                                  //     Future.delayed(Duration(seconds: 1), () {
-                                  //       GetChatByIdService()
-                                  //           .callGetChatByIdService(context,
-                                  //               chatId: response.responseData!.data!.id)
-                                  //           .then((response) {
-                                  //         loadingProvider.setLoading(false);
-                                  //         if (response.responseData != null &&
-                                  //             response.responseData?.success == true &&
-                                  //             (response.responseData!.status == 201 ||
-                                  //                 response.responseData!.status == 200)) {
-                                  //           Navigator.of(context).pushNamed(RouteConstant.chatScreen,
-                                  //               arguments: {
-                                  //                 "chat_id": response.responseData!.data!.id,
-                                  //                 "create_new_chat": true
-                                  //               });
-                                  //         } else {
-                                  //           ShowToast().showFlushBar(context,
-                                  //               message:
-                                  //                   "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
-                                  //               error: true);
-                                  //         }
-                                  //       });
-                                  //     });
-                                  //   } else {
-                                  //     loadingProvider.setLoading(false);
-                                  //     ShowToast()
-                                  //         .showFlushBar(context, message: "Chat not create", error: true);
-                                  //   }
-                                  // });
                                 },
                                 child: Container(
                                   width: 145.w,
@@ -215,6 +177,21 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                 : SizedBox()
                           ],
                         )),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Text(
+                              "Long press on a chat to pin it for quick access.",
+                              style: TextStyle(
+                                color: ColorConstants.greyColor,
+                                fontWeight: FontWeight.w300,
+                                fontFamily: poppinsLight,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     !isVisible!
@@ -297,79 +274,71 @@ class _AllChatListPageState extends State<AllChatListPage> {
             ChatData chatData = pinChat[index];
             List<Messages>? chatMessage = chatData.messages;
             return chatMessage != null && chatMessage != [] && chatMessage.isNotEmpty
-                ? Dismissible(
-                    key: Key(chatMessage.first.id!),
-                    background: slideRightBackground(unpinChat: true),
-                    // secondaryBackground: slideRightBackground(unpinChat: true),
-                    secondaryBackground: slideLeftBackground(),
-                    confirmDismiss: (direction) => confirmDismiss(
-                        context, direction, chatMessage.first.chatId!,
-                        unpinChat: true, swipePinChat: true),
-                    child: InkWell(
-                      onTap: () {
-                        Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+                ? InkWell(
+                    onLongPress: () =>
+                        showPinOrDeleteBottomSheet(context, chatMessage.first.chatId!, isPinChat: true),
+                    onTap: () {
+                      Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
 
-                        GetChatByIdService()
-                            .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
-                            .then((response) {
-                          if (response.responseData != null &&
-                              response.responseData?.success == true &&
-                              (response.responseData!.status == 201 ||
-                                  response.responseData!.status == 200)) {
-                            chatProvider.setCreateNewChatValue(false);
-                            chatProvider.setChatId(chatMessage.first.chatId!);
+                      GetChatByIdService()
+                    .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
+                    .then((response) {
+                  if (response.responseData != null &&
+                      response.responseData?.success == true &&
+                      (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                    chatProvider.setCreateNewChatValue(false);
+                    chatProvider.setChatId(chatMessage.first.chatId!);
 
-                            Navigator.of(context).pushNamed(RouteConstant.chatScreen);
-                          } else {
-                            ShowToast().showFlushBar(context,
-                                message:
-                                    "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
-                                error: true);
-                          }
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Row(
-                            spacing: 10.w,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                AssetsImages.pinIcon,
-                                height: 20.h,
+                          Navigator.of(context).pushNamed(RouteConstant.chatScreen);
+                        } else {
+                          ShowToast().showFlushBar(context,
+                              message:
+                                  "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
+                              error: true);
+                        }
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          spacing: 10.w,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              AssetsImages.pinIcon,
+                              height: 20.h,
+                            ),
+                            Expanded(
+                              child: Column(
+                                spacing: 2.h,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    chatMessage.first.message!,
+                                    style: AppTextStyle()
+                                        .poppinsLightStyle()
+                                        .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
+                                  ),
+                                  Text(chatMessage.first.message!,
+                                      style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
+                                ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  spacing: 2.h,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      chatMessage.first.message!,
-                                      style: AppTextStyle()
-                                          .poppinsLightStyle()
-                                          .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
-                                    ),
-                                    Text(chatMessage.first.message!,
-                                        style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
-                                  ],
-                                ),
+                            ),
+                            Text(
+                              extractTime(chatMessage.first.createdAt!),
+                              style: AppTextStyle()
+                                  .poppinsLightStyle()
+                                  .copyWith(color: ColorConstants.textGreyColor),
+                            )
+                          ],
+                        ),
+                        index == pinChat.length - 1
+                            ? SizedBox()
+                            : Divider(
+                                color: ColorConstants.textGreyColor.withOpacity(0.2),
+                                thickness: 1.sp,
                               ),
-                              Text(
-                                extractTime(chatMessage.first.createdAt!),
-                                style: AppTextStyle()
-                                    .poppinsLightStyle()
-                                    .copyWith(color: ColorConstants.textGreyColor),
-                              )
-                            ],
-                          ),
-                          index == pinChat.length - 1
-                              ? SizedBox()
-                              : Divider(
-                                  color: ColorConstants.textGreyColor.withOpacity(0.2),
-                                  thickness: 1.sp,
-                                ),
-                        ],
-                      ),
+                      ],
                     ),
                   )
                 : SizedBox();
@@ -394,77 +363,70 @@ class _AllChatListPageState extends State<AllChatListPage> {
             ChatData chatData = recentChat[index];
             List<Messages>? chatMessage = chatData.messages;
             return chatMessage != null && chatMessage != [] && chatMessage.isNotEmpty
-                ? Dismissible(
-                    key: Key(chatMessage.first.id!),
-                    background: slideRightBackground(),
-                    secondaryBackground: slideLeftBackground(),
-                    confirmDismiss: (direction) =>
-                        confirmDismiss(context, direction, chatMessage.first.chatId!),
-                    child: InkWell(
-                      onTap: () {
-                        Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+                ? InkWell(
+                    onLongPress: () => showPinOrDeleteBottomSheet(context, chatMessage.first.chatId!),
+                    onTap: () {
+                      Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
 
-                        GetChatByIdService()
-                            .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
-                            .then((response) {
-                          if (response.responseData != null &&
-                              response.responseData?.success == true &&
-                              (response.responseData!.status == 201 ||
-                                  response.responseData!.status == 200)) {
-                            chatProvider.setCreateNewChatValue(false);
-                            chatProvider.setChatId(chatMessage.first.chatId!);
+                      GetChatByIdService()
+                    .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
+                    .then((response) {
+                  if (response.responseData != null &&
+                      response.responseData?.success == true &&
+                      (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                    chatProvider.setCreateNewChatValue(false);
+                    chatProvider.setChatId(chatMessage.first.chatId!);
 
-                            Navigator.of(context).pushNamed(RouteConstant.chatScreen);
-                          } else {
-                            ShowToast().showFlushBar(context,
-                                message:
-                                    "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
-                                error: true);
-                          }
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Row(
-                            spacing: 10.w,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                AssetsImages.celebrationIcon,
-                                height: 20.h,
+                          Navigator.of(context).pushNamed(RouteConstant.chatScreen);
+                        } else {
+                          ShowToast().showFlushBar(context,
+                              message:
+                                  "${response.responseData != null ? response.responseData?.error != null ? response.responseData?.error : "Please login again" : "Please login again"}",
+                              error: true);
+                        }
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          spacing: 10.w,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(
+                              AssetsImages.celebrationIcon,
+                              height: 20.h,
+                            ),
+                            Expanded(
+                              child: Column(
+                                spacing: 2.h,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    chatMessage.first.message!,
+                                    style: AppTextStyle()
+                                        .poppinsLightStyle()
+                                        .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
+                                  ),
+                                  Text(chatMessage.first.message!,
+                                      style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
+                                ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  spacing: 2.h,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      chatMessage.first.message!,
-                                      style: AppTextStyle()
-                                          .poppinsLightStyle()
-                                          .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
-                                    ),
-                                    Text(chatMessage.first.message!,
-                                        style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
-                                  ],
-                                ),
+                            ),
+                            Text(
+                              extractTime(chatMessage.first.createdAt!),
+                              style: AppTextStyle()
+                                  .poppinsLightStyle()
+                                  .copyWith(color: ColorConstants.textGreyColor),
+                            )
+                          ],
+                        ),
+                        index == recentChat.length - 1
+                            ? SizedBox()
+                            : Divider(
+                                color: ColorConstants.textGreyColor.withOpacity(0.2),
+                                thickness: 1.sp,
                               ),
-                              Text(
-                                extractTime(chatMessage.first.createdAt!),
-                                style: AppTextStyle()
-                                    .poppinsLightStyle()
-                                    .copyWith(color: ColorConstants.textGreyColor),
-                              )
-                            ],
-                          ),
-                          index == recentChat.length - 1
-                              ? SizedBox()
-                              : Divider(
-                                  color: ColorConstants.textGreyColor.withOpacity(0.2),
-                                  thickness: 1.sp,
-                                ),
-                        ],
-                      ),
+                      ],
                     ),
                   )
                 : SizedBox();

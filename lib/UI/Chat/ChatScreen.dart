@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:supportive_app/Components/ShowToast/ShowToast.dart';
+import 'package:supportive_app/Models/ChatModel/GetChatModel/GetChatByIdResponseModel.dart';
 import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/ChatService/CreateAndDeleteChatService/CreateChatService.dart';
@@ -118,59 +119,59 @@ class _ChatScreenState extends State<ChatScreen> {
                                   controller: _scrollController, // ✅ Attach Scroll Controller
 
                                   itemCount: chatData.messages!.length,
-                              itemBuilder: (context, index) {
-                                var message = chatData.messages![index];
-                                return Align(
-                                  alignment: message.senderId != null
-                                      ? Alignment.centerRight
-                                      : Alignment.centerLeft,
-                                  child: Container(
-                                    padding: EdgeInsets.all(12.sp),
-                                    margin: EdgeInsets.symmetric(vertical: 10.h) +
-                                        EdgeInsets.only(
-                                            left: message.senderId != null ? 50.sp : 0,
-                                            right: message.senderId == null ? 50.sp : 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.sp),
-                                      color: message.senderId != null
-                                          ? ColorConstants.appPrimaryColor
-                                          : ColorConstants.whiteColor,
-                                    ),
-                                    child: Text(
-                                      textAlign: TextAlign.justify,
-                                      message.message ?? "",
+                                  itemBuilder: (context, index) {
+                                    var message = chatData.messages![index];
+                                    return Align(
+                                      alignment: message.senderId != null
+                                          ? Alignment.centerRight
+                                          : Alignment.centerLeft,
+                                      child: Container(
+                                        padding: EdgeInsets.all(12.sp),
+                                        margin: EdgeInsets.symmetric(vertical: 10.h) +
+                                            EdgeInsets.only(
+                                                left: message.senderId != null ? 50.sp : 0,
+                                                right: message.senderId == null ? 50.sp : 0),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12.sp),
+                                          color: message.senderId != null
+                                              ? ColorConstants.appPrimaryColor
+                                              : ColorConstants.whiteColor,
+                                        ),
+                                        child: Text(
+                                          textAlign: TextAlign.justify,
+                                          message.message ?? "",
                                           style: AppTextStyle().poppinsLightStyle().copyWith(
                                               fontSize: 12.sp,
-                                          color: message.senderId != null
-                                              ? ColorConstants.whiteColor
-                                              : ColorConstants.blackColor),
-                                    ),
-                                  ),
-                                );
-                                // index == 0
-                                //     ? Row(
-                                //         children: [
-                                //           Expanded(
-                                //               child: DottedLine(
-                                //             direction: Axis.horizontal,
-                                //             dashColor: ColorConstants.textGreyColor,
-                                //           )),
-                                //           Padding(
-                                //             padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                //             child: Text(
-                                //               "10:30 am - 12/02/26",
-                                //               style: AppTextStyle.poppinsLightStyle.copyWith(
-                                //                   color: ColorConstants.textGreyColor, fontSize: 12.sp),
-                                //             ),
-                                //           ),
-                                //           Expanded(
-                                //               child: DottedLine(
-                                //                   direction: Axis.horizontal,
-                                //                   dashColor: ColorConstants.textGreyColor)),
-                                //         ],
-                                //       )
-                                //     : SizedBox(),
-                              })
+                                              color: message.senderId != null
+                                                  ? ColorConstants.whiteColor
+                                                  : ColorConstants.blackColor),
+                                        ),
+                                      ),
+                                    );
+                                    // index == 0
+                                    //     ? Row(
+                                    //         children: [
+                                    //           Expanded(
+                                    //               child: DottedLine(
+                                    //             direction: Axis.horizontal,
+                                    //             dashColor: ColorConstants.textGreyColor,
+                                    //           )),
+                                    //           Padding(
+                                    //             padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                    //             child: Text(
+                                    //               "10:30 am - 12/02/26",
+                                    //               style: AppTextStyle.poppinsLightStyle.copyWith(
+                                    //                   color: ColorConstants.textGreyColor, fontSize: 12.sp),
+                                    //             ),
+                                    //           ),
+                                    //           Expanded(
+                                    //               child: DottedLine(
+                                    //                   direction: Axis.horizontal,
+                                    //                   dashColor: ColorConstants.textGreyColor)),
+                                    //         ],
+                                    //       )
+                                    //     : SizedBox(),
+                                  })
                               : SizedBox()),
                     ],
                   ),
@@ -203,6 +204,16 @@ class _ChatScreenState extends State<ChatScreen> {
                               onTap: () {
                                 if (chatProvider.chatMessage.text.isNotEmpty) {
                                   loadingProvider.setLoading(true);
+                                  chatProvider.setAddChatByIdResponse(
+                                      ChatMessages(
+                                          id: "",
+                                          chatId: "",
+                                          message: chatProvider.chatMessage.text,
+                                          senderId: ""),
+                                      "");
+                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                    _scrollToBottom();
+                                  });
                                   if (chatProvider.createNewChat) {
                                     CreateChatService().callCreateChatService(context).then((response) {
                                       if (response!.responseData != null &&
@@ -227,6 +238,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                             });
                                           } else {
                                             loadingProvider.setLoading(false);
+                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                                              _scrollToBottom();
+                                            });
                                             ShowToast().showFlushBar(context,
                                                 message: "Chat can't be send. They are some server issue",
                                                 error: true);
@@ -251,6 +265,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                           _scrollToBottom();
                                         });
                                       } else {
+                                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                                          _scrollToBottom();
+                                        });
                                         ShowToast().showFlushBar(context,
                                             message: "Chat can't be send. They are some server issue",
                                             error: true);

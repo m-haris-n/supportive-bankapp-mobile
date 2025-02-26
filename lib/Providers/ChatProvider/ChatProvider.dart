@@ -103,7 +103,6 @@ class ChatProvider extends ChangeNotifier {
       getAllChatResponse!.data!.pinnedChats!.removeWhere((element) => element.id == chatId);
     } else {
       getAllChatResponse!.data!.chats!.removeWhere((element) => element.id == chatId);
-      Navigator.of(context).pop(false);
     }
 
     notifyListeners();
