@@ -191,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         filled: true,
                         filledColor: ColorConstants.textFieldFilledColor,
                         borderSideColor: ColorConstants.textFieldFilledColor,
-                        controller: chatProvider.chatMessage,
+                        controller: chatProvider.chatMessageController,
                       )),
                       loadingProvider.isLoading
                           ? SizedBox(
@@ -202,15 +202,17 @@ class _ChatScreenState extends State<ChatScreen> {
                               ))
                           : InkWell(
                               onTap: () {
-                                if (chatProvider.chatMessage.text.isNotEmpty) {
+                                if (chatProvider.chatMessageController.text.isNotEmpty) {
                                   loadingProvider.setLoading(true);
+                                  chatProvider.chatMessage = chatProvider.chatMessageController.text;
                                   chatProvider.setAddChatByIdResponse(
                                       ChatMessages(
                                           id: "",
                                           chatId: "",
-                                          message: chatProvider.chatMessage.text,
+                                          message: chatProvider.chatMessage,
                                           senderId: ""),
                                       "");
+                                  chatProvider.cleanChatBox();
                                   WidgetsBinding.instance.addPostFrameCallback((_) {
                                     _scrollToBottom();
                                   });
@@ -227,7 +229,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                             .callSendChatService(context, response.responseData!.data!.id)
                                             .then((response) {
                                           loadingProvider.setLoading(false);
-                                          chatProvider.cleanChatBox();
                                           if (response!.responseData != null &&
                                               response.responseData?.success == true &&
                                               (response.responseData!.status == 201 ||
@@ -254,7 +255,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                     SendChatService()
                                         .callSendChatService(context, chatProvider.chatId)
                                         .then((response) {
-                                      chatProvider.cleanChatBox();
                                       loadingProvider.setLoading(false);
                                       if (response!.responseData != null &&
                                           response.responseData?.success == true &&

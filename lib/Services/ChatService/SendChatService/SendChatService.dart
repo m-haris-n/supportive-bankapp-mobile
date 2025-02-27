@@ -17,8 +17,7 @@ class SendChatService {
     var chatProvider = Provider.of<ChatProvider>(context, listen: false);
 
     try {
-      SendChatMessageRequestModel requestModel = SendChatMessageRequestModel(
-          senderId: userId, chatId: chatId, message: chatProvider.chatMessage.text);
+      SendChatMessageRequestModel requestModel = SendChatMessageRequestModel(senderId: userId, chatId: chatId, message: chatProvider.chatMessage);
       debugPrint("SendChatMessageRequestModel:${requestModel.toJson()}");
       var response =
           await Api().postRequest(context, ApiUrl.sendMessage, requestModel.toJson(), sendToken: true);

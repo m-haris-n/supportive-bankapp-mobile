@@ -16,7 +16,8 @@ class ChatProvider extends ChangeNotifier {
   ChatPinResponseModel? chatPinResponse;
   ChatUnpinResponseModel? chatUnpinResponse;
 
-  TextEditingController chatMessage = TextEditingController();
+  TextEditingController chatMessageController = TextEditingController();
+  String? chatMessage;
 
   bool createNewChat = false;
   String? chatId;
@@ -123,7 +124,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   cleanChatBox() {
-    chatMessage.clear();
+    chatMessageController.clear();
     notifyListeners();
   }
 
@@ -131,7 +132,8 @@ class ChatProvider extends ChangeNotifier {
     chatId = null;
     createNewChat = false;
     getChatByIdResponse = null;
-    chatMessage.clear();
+    chatMessageController.clear();
+    chatMessage = null;
 
     notifyListeners();
   }

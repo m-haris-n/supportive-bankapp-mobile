@@ -14,128 +14,159 @@ void showPinOrDeleteBottomSheet(BuildContext context, String? chatId, {bool isPi
   showModalBottomSheet(
     context: context,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (context) {
       return Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-                isPinChat
-                    ? "Are you sure you want to unpin or delete this chat"
-                    : "Are you sure you want to pin or delete this chat"),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomAppButton(
-                    title: isPinChat ? "Unpin" : "Pin",
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    onPress: () {
-                      Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
-                      if (isPinChat) {
-                        UnpinChatService().callUnpinChatService(context, chatId).then((response) {
-                          Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
-
-                          if (response!.responseData != null &&
-                              response.responseData?.success == true &&
-                              (response.responseData!.status == 201 ||
-                                  response.responseData!.status == 200)) {
-                            Provider.of<ChatProvider>(context, listen: false)
-                                .pinAndUnPinChat(chatId, isPinChat: isPinChat);
-                            ShowToast().showFlushBar(
-                              context,
-                              message: "Chat unpin successfully",
-                            );
-                            Future.delayed(Duration(milliseconds: 1500), () {
-                              Navigator.of(context)
-                                ..pop()
-                                ..pop();
-                            });
-                          } else {
-                            ShowToast().showFlushBar(context,
-                                message: response.responseData!.data ??
-                                    "Chat can't unpin. They are some server issue",
-                                error: true);
-                          }
-                        });
-                      } else {
-                        PinChatService().callPinChatService(context, chatId).then((response) {
-                          Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
-
-                          if (response!.responseData != null &&
-                              response.responseData?.success == true &&
-                              (response.responseData!.status == 201 ||
-                                  response.responseData!.status == 200)) {
-                            Provider.of<ChatProvider>(context, listen: false)
-                                .pinAndUnPinChat(chatId, isPinChat: isPinChat);
-                            ShowToast().showFlushBar(
-                              context,
-                              message: "Chat pin successfully",
-                            );
-                            Future.delayed(Duration(milliseconds: 1500), () {
-                              Navigator.of(context)
-                                ..pop()
-                                ..pop();
-                            });
-                          } else {
-                            ShowToast().showFlushBar(context,
-                                message: "Chat can't pin. They are some server issue", error: true);
-                          }
-                        });
-                      }
-                    },
+            // Title & Message
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                children: [
+                  Text(
+                    "Chat Options",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: CustomAppButton(
-                    title: "Delete",
-                    fontSize: 14.sp,
-                    btnColor: ColorConstants.redColor,
-                    fontWeight: FontWeight.w500,
-                    onPress: () {
-                      Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+                  SizedBox(height: 4),
+                  Text(
+                    isPinChat ? "Choose an option for this chat" : "What would you like to do?",
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Divider(height: 1),
 
-                      DeleteChatService().callDeleteChatService(context, chatId).then((response) {
-                        Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
+            // Pin / Unpin Option
+            _buildActionItem(
+              title: isPinChat ? "Unpin Chat" : "Pin Chat",
+              onTap: () {
+                Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+                if (isPinChat) {
+                  UnpinChatService().callUnpinChatService(context, chatId).then((response) {
+                    Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
 
-                        if (response!.responseData != null &&
-                            response.responseData?.success == true &&
-                            (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-                          Provider.of<ChatProvider>(context, listen: false)
-                              .deleteChatFromResponse(context, chatId, isPinChat: isPinChat);
-                          ShowToast().showFlushBar(
-                            context,
-                            message: "Chat delete successfully",
-                          );
-                          Future.delayed(Duration(milliseconds: 1500), () {
-                            Navigator.of(context)
-                              ..pop()
-                              ..pop();
-                          });
-                        } else {
-                          ShowToast().showFlushBar(context,
-                              message: response.responseData!.data ??
-                                  "Chat can't delete. They are some server issue",
-                              error: true);
-                        }
+                    if (response!.responseData != null &&
+                        response.responseData?.success == true &&
+                        (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                      Provider.of<ChatProvider>(context, listen: false)
+                          .pinAndUnPinChat(chatId, isPinChat: isPinChat);
+                      ShowToast().showFlushBar(
+                        context,
+                        message: "Chat unpin successfully",
+                      );
+                      Future.delayed(Duration(milliseconds: 1500), () {
+                        Navigator.of(context)
+                          ..pop()
+                          ..pop();
                       });
-                    },
-                  ),
-                ),
-              ],
+                    } else {
+                      ShowToast().showFlushBar(context,
+                          message:
+                              response.responseData!.data ?? "Chat can't unpin. They are some server issue",
+                          error: true);
+                    }
+                  });
+                } else {
+                  PinChatService().callPinChatService(context, chatId).then((response) {
+                    Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
+
+                    if (response!.responseData != null &&
+                        response.responseData?.success == true &&
+                        (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                      Provider.of<ChatProvider>(context, listen: false)
+                          .pinAndUnPinChat(chatId, isPinChat: isPinChat);
+                      ShowToast().showFlushBar(
+                        context,
+                        message: "Chat pin successfully",
+                      );
+                      Future.delayed(Duration(milliseconds: 1500), () {
+                        Navigator.of(context)
+                          ..pop()
+                          ..pop();
+                      });
+                    } else {
+                      ShowToast().showFlushBar(context,
+                          message: "Chat can't pin. They are some server issue", error: true);
+                    }
+                  });
+                }
+              },
+            ),
+            Divider(height: 1),
+
+            // Delete Chat Option
+            _buildActionItem(
+              title: "Delete Chat",
+              isDestructive: true,
+              onTap: () {
+                Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
+
+                DeleteChatService().callDeleteChatService(context, chatId).then((response) {
+                  Provider.of<LoadingProvider>(context, listen: false).setLoading(false);
+
+                  if (response!.responseData != null &&
+                      response.responseData?.success == true &&
+                      (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                    Provider.of<ChatProvider>(context, listen: false)
+                        .deleteChatFromResponse(context, chatId, isPinChat: isPinChat);
+                    ShowToast().showFlushBar(
+                      context,
+                      message: "Chat delete successfully",
+                    );
+                    Future.delayed(Duration(milliseconds: 1500), () {
+                      Navigator.of(context)
+                        ..pop()
+                        ..pop();
+                    });
+                  } else {
+                    ShowToast().showFlushBar(context,
+                        message:
+                            response.responseData!.data ?? "Chat can't delete. They are some server issue",
+                        error: true);
+                  }
+                });
+              },
+            ),
+            Divider(height: 1),
+
+            // Cancel Button
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: _buildActionItem(
+                title: "Cancel",
+                isBold: true,
+                onTap: () => Navigator.pop(context),
+              ),
             ),
           ],
         ),
       );
     },
+  );
+}
+
+// Custom Action Item Widget
+Widget _buildActionItem(
+    {required String title, required VoidCallback onTap, bool isDestructive = false, bool isBold = false}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 12),
+      width: double.infinity,
+      alignment: Alignment.center,
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 16,
+          color: isDestructive ? Colors.red : Colors.blue,
+          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
+    ),
   );
 }
