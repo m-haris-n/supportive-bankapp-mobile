@@ -8,7 +8,6 @@ import 'package:supportive_app/Models/ChatModel/GetChatModel/GetChatByIdResponse
 import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/ChatService/CreateAndDeleteChatService/CreateChatService.dart';
-import 'package:supportive_app/Services/ChatService/GetChatService/GetAllChatService.dart';
 import 'package:supportive_app/Services/ChatService/SendChatService/SendChatService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
@@ -22,25 +21,25 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  Timer? timer;
+  // Timer? timer;
   final ScrollController _scrollController = ScrollController();
 
-  dismissTimer() {
-    if (timer != null) {
-      timer!.cancel();
-      timer = null;
-    }
-    setState(() {});
-  }
+  // dismissTimer() {
+  //   if (timer != null) {
+  //     timer!.cancel();
+  //     timer = null;
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (value) {
-      // GetChatByIdService().callGetChatByIdService(context, chatId: widget.data["chat_id"]);
-      GetAllChatService().callGetAllChatService(context, isCallLoading: false);
-    });
+    // timer = Timer.periodic(Duration(seconds: 10), (value) {
+    //   // GetChatByIdService().callGetChatByIdService(context, chatId: widget.data["chat_id"]);
+    //   GetAllChatService().callGetAllChatService(context, isCallLoading: false);
+    // });
 
     /// Scroll to bottom after chat loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -49,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void dispose() {
-    dismissTimer();
+    // dismissTimer();
     _scrollController.dispose();
 
     super.dispose();
@@ -73,10 +72,14 @@ class _ChatScreenState extends State<ChatScreen> {
       var chatData = chatResponse != null ? chatResponse.data : null;
       return Scaffold(
         body: PopScope(
-          canPop: true,
+          canPop: false,
           onPopInvokedWithResult: (value, data) {
             chatProvider.reset();
-            dismissTimer();
+            Future.delayed(Duration(milliseconds: 300), () {
+              if (mounted && Navigator.canPop(context)) {
+                Navigator.of(context).pop(true);
+              }
+            });
           },
           child: CustomBackground(
             widget: Column(
@@ -89,7 +92,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: [
                       InkWell(
                           onTap: () {
-                            Navigator.of(context).pop();
+                            if (mounted && Navigator.canPop(context)) {
+                              Navigator.of(context).pop(true);
+                            }
                           },
                           child: Icon(
                             Icons.arrow_back,

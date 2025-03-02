@@ -115,7 +115,11 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                   chatProvider.setCreateNewChatValue(true);
                                   chatProvider.setChatId(null);
 
-                                  Navigator.of(context).pushNamed(RouteConstant.chatScreen);
+                                  Navigator.of(context).pushNamed(RouteConstant.chatScreen).then((response) {
+                                    if (response == true) {
+                                      GetAllChatService().callGetAllChatService(context);
+                                    }
+                                  });
                                 },
                                 child: Container(
                                   width: 145.w,
@@ -281,15 +285,19 @@ class _AllChatListPageState extends State<AllChatListPage> {
                       Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
 
                       GetChatByIdService()
-                    .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
-                    .then((response) {
-                  if (response.responseData != null &&
-                      response.responseData?.success == true &&
-                      (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-                    chatProvider.setCreateNewChatValue(false);
-                    chatProvider.setChatId(chatMessage.first.chatId!);
+                          .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
+                          .then((response) {
+                        if (response.responseData != null &&
+                            response.responseData?.success == true &&
+                            (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                          chatProvider.setCreateNewChatValue(false);
+                          chatProvider.setChatId(chatMessage.first.chatId!);
 
-                          Navigator.of(context).pushNamed(RouteConstant.chatScreen);
+                          Navigator.of(context).pushNamed(RouteConstant.chatScreen).then((response) {
+                            if (response == true) {
+                              GetAllChatService().callGetAllChatService(context);
+                            }
+                          });
                         } else {
                           ShowToast().showFlushBar(context,
                               message:
@@ -369,15 +377,19 @@ class _AllChatListPageState extends State<AllChatListPage> {
                       Provider.of<LoadingProvider>(context, listen: false).setLoading(true);
 
                       GetChatByIdService()
-                    .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
-                    .then((response) {
-                  if (response.responseData != null &&
-                      response.responseData?.success == true &&
-                      (response.responseData!.status == 201 || response.responseData!.status == 200)) {
-                    chatProvider.setCreateNewChatValue(false);
-                    chatProvider.setChatId(chatMessage.first.chatId!);
+                          .callGetChatByIdService(context, chatId: chatMessage.first.chatId)
+                          .then((response) {
+                        if (response.responseData != null &&
+                            response.responseData?.success == true &&
+                            (response.responseData!.status == 201 || response.responseData!.status == 200)) {
+                          chatProvider.setCreateNewChatValue(false);
+                          chatProvider.setChatId(chatMessage.first.chatId!);
 
-                          Navigator.of(context).pushNamed(RouteConstant.chatScreen);
+                          Navigator.of(context).pushNamed(RouteConstant.chatScreen).then((response) {
+                            if (response == true) {
+                              GetAllChatService().callGetAllChatService(context);
+                            }
+                          });
                         } else {
                           ShowToast().showFlushBar(context,
                               message:
