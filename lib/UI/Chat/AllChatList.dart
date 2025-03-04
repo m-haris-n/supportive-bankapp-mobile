@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -102,59 +103,59 @@ class _AllChatListPageState extends State<AllChatListPage> {
                             )
                           ],
                         ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: InkWell(
+                            onTap: () {
+                              chatProvider.reset();
+                              chatProvider.setCreateNewChatValue(true);
+                              chatProvider.setChatId(null);
+
+                              Navigator.of(context).pushNamed(RouteConstant.chatScreen).then((response) {
+                                if (response == true) {
+                                  GetAllChatService().callGetAllChatService(context);
+                                }
+                              });
+                            },
+                            child: Container(
+                              width: 145.w,
+                              height: 45.h,
+                              margin: EdgeInsets.symmetric(vertical: 15.h),
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.sp),
+                                  color: ColorConstants.appPrimaryColor),
+                              child: Row(
+                                spacing: 10.sp,
+                                children: [
+                                  Container(
+                                      height: 24.w,
+                                      width: 24.w,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle, color: ColorConstants.whiteColor),
+                                      child: Center(
+                                          child: Icon(
+                                        Icons.add,
+                                            size: 18.sp,
+                                            color: ColorConstants.blackColor,
+                                          ))),
+                                  Text("New Chat",
+                                      style: TextStyle(
+                                        color: ColorConstants.whiteColor,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: poppinsLight,
+                                        fontSize: 14.sp,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         Expanded(
                             child: ListView(
                           padding: EdgeInsets.zero,
                           physics: AlwaysScrollableScrollPhysics(), // ✅ Important!
                           children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: InkWell(
-                                onTap: () {
-                                  chatProvider.reset();
-                                  chatProvider.setCreateNewChatValue(true);
-                                  chatProvider.setChatId(null);
-
-                                  Navigator.of(context).pushNamed(RouteConstant.chatScreen).then((response) {
-                                    if (response == true) {
-                                      GetAllChatService().callGetAllChatService(context);
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  width: 145.w,
-                                  height: 45.h,
-                                  margin: EdgeInsets.symmetric(vertical: 15.h),
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30.sp),
-                                      color: ColorConstants.appPrimaryColor),
-                                  child: Row(
-                                    spacing: 10.sp,
-                                    children: [
-                                      Container(
-                                          height: 24.w,
-                                          width: 24.w,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle, color: ColorConstants.whiteColor),
-                                          child: Center(
-                                              child: Icon(
-                                            Icons.add,
-                                            size: 18.sp,
-                                            color: ColorConstants.blackColor,
-                                          ))),
-                                      Text("New Chat",
-                                          style: TextStyle(
-                                            color: ColorConstants.whiteColor,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: poppinsLight,
-                                            fontSize: 14.sp,
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
                             pinnedChats != [] && pinnedChats.isNotEmpty
                                 ? Text(
                                     "Pin Chat",
@@ -323,11 +324,15 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                 children: [
                                   Text(
                                     chatMessage.first.message!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: AppTextStyle()
                                         .poppinsLightStyle()
                                         .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
                                   ),
                                   Text(chatMessage.first.message!,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
                                 ],
                               ),
@@ -413,13 +418,41 @@ class _AllChatListPageState extends State<AllChatListPage> {
                                 spacing: 2.h,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // MarkdownBody(
+                                  //   data: chatMessage.first.message!,
+                                  //   styleSheet: MarkdownStyleSheet(
+                                  //     p: AppTextStyle()
+                                  //         .poppinsLightStyle()
+                                  //         .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
+                                  //     strong: AppTextStyle().poppinsLightStyle().copyWith(
+                                  //         color: ColorConstants.blackColor,
+                                  //         fontSize: 13.sp,
+                                  //         fontWeight: FontWeight.bold),
+                                  //   ),
+                                  // ),
+                                  // MarkdownBody(
+                                  //   data: chatMessage.first.message!,
+                                  //   styleSheet: MarkdownStyleSheet(
+                                  //
+                                  //     p: AppTextStyle()
+                                  //         .poppinsLightStyle()
+                                  //         .copyWith(fontSize: 12.sp),
+                                  //     strong: AppTextStyle().poppinsLightStyle().copyWith(
+                                  //         fontSize: 13.sp,
+                                  //         fontWeight: FontWeight.bold),
+                                  //   ),
+                                  // ),
                                   Text(
                                     chatMessage.first.message!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: AppTextStyle()
                                         .poppinsLightStyle()
                                         .copyWith(color: ColorConstants.blackColor, fontSize: 12.sp),
                                   ),
                                   Text(chatMessage.first.message!,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle().poppinsLightStyle().copyWith(fontSize: 12.sp)),
                                 ],
                               ),

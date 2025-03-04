@@ -50,6 +50,7 @@ dependencies:
   email_validator: ^3.0.0
   plaid_flutter: ^4.2.0
   intl:
+  flutter_markdown: ^0.7.6+2
 
 
 dev_dependencies:

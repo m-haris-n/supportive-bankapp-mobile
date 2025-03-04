@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -131,27 +132,43 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ? Alignment.centerRight
                                           : Alignment.centerLeft,
                                       child: Container(
-                                        padding: EdgeInsets.all(12.sp),
-                                        margin: EdgeInsets.symmetric(vertical: 10.h) +
-                                            EdgeInsets.only(
-                                                left: message.senderId != null ? 50.sp : 0,
-                                                right: message.senderId == null ? 50.sp : 0),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12.sp),
-                                          color: message.senderId != null
-                                              ? ColorConstants.appPrimaryColor
-                                              : ColorConstants.whiteColor,
-                                        ),
-                                        child: Text(
-                                          textAlign: TextAlign.justify,
-                                          message.message ?? "",
-                                          style: AppTextStyle().poppinsLightStyle().copyWith(
-                                              fontSize: 12.sp,
-                                              color: message.senderId != null
-                                                  ? ColorConstants.whiteColor
-                                                  : ColorConstants.blackColor),
-                                        ),
-                                      ),
+                                          padding: EdgeInsets.all(12.sp),
+                                          margin: EdgeInsets.symmetric(vertical: 10.h) +
+                                              EdgeInsets.only(
+                                                  left: message.senderId != null ? 50.sp : 0,
+                                                  right: message.senderId == null ? 50.sp : 0),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12.sp),
+                                            color: message.senderId != null
+                                                ? ColorConstants.appPrimaryColor
+                                                : ColorConstants.whiteColor,
+                                          ),
+                                          child: MarkdownBody(
+                                            data: message.message ?? "",
+                                            styleSheet: MarkdownStyleSheet(
+                                              p: AppTextStyle().poppinsLightStyle().copyWith(
+                                                  fontSize: 12.sp,
+                                                  color: message.senderId != null
+                                                      ? ColorConstants.whiteColor
+                                                      : ColorConstants.blackColor),
+                                              strong: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14.sp,
+                                                  color: message.senderId != null
+                                                      ? ColorConstants.whiteColor
+                                                      : ColorConstants.blackColor),
+                                            ),
+                                          )
+                                          // Text(
+                                          //   textAlign: TextAlign.justify,
+                                          //   message.message ?? "",
+                                          //   style: AppTextStyle().poppinsLightStyle().copyWith(
+                                          //       fontSize: 12.sp,
+                                          //       color: message.senderId != null
+                                          //           ? ColorConstants.whiteColor
+                                          //           : ColorConstants.blackColor),
+                                          // ),
+                                          ),
                                     );
                                     // index == 0
                                     //     ? Row(
