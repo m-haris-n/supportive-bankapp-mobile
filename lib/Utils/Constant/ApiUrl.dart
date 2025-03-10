@@ -1,6 +1,6 @@
 class ApiUrl {
-  static const String apiBaseUrl = "https://supportive-bankapp-backend.vercel.app/api/";
-
+  // static const String apiBaseUrl = "https://supportive-bankapp-backend.vercel.app/api/";
+  static const String apiBaseUrl = "http://10.61.138.100:3000/api/";
   // static const String apiBaseUrl = "https://bank-app-backend-pi.vercel.app/api/";
   static const String register = "auth/register";
   static const String login = "auth/login";
