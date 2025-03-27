@@ -1,0 +1,2 @@
+/Users/mharisn/Documents/Supportive/mobileapp/android/app/.cxx/RelWithDebInfo/573b4t5o/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/mharisn/Documents/Supportive/mobileapp/android/app/.cxx/RelWithDebInfo/573b4t5o/arm64-v8a/CMakeFiles/rebuild_cache.dir

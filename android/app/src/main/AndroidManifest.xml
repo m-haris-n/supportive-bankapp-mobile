@@ -1,7 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.supportive.app">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="Supportive"
+        android:label="Supportive Bank Assistant"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

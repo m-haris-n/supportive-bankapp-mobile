@@ -10,6 +10,7 @@ import 'package:supportive_app/Providers/ChatProvider/ChatProvider.dart';
 import 'package:supportive_app/Providers/LoadingProvider/LoadingProvider.dart';
 import 'package:supportive_app/Services/ChatService/CreateAndDeleteChatService/CreateChatService.dart';
 import 'package:supportive_app/Services/ChatService/SendChatService/SendChatService.dart';
+import 'package:supportive_app/Services/PlaidService/PlaidRefreshService.dart';
 import 'package:supportive_app/Utils/Constant/AssetImages.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 import 'package:supportive_app/components/CustomBackground/CustomBackground.dart';
@@ -71,6 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Consumer2<LoadingProvider, ChatProvider>(builder: (context, loadingProvider, chatProvider, _) {
       var chatResponse = chatProvider.getChatByIdResponse;
       var chatData = chatResponse != null ? chatResponse.data : null;
+      bool isChatEmpty = chatData == null || chatData.messages == null || chatData.messages!.isEmpty;
+      
       return Scaffold(
         body: PopScope(
           canPop: false,
@@ -91,24 +94,50 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                          onTap: () {
-                            if (mounted && Navigator.canPop(context)) {
-                              Navigator.of(context).pop(true);
-                            }
-                          },
-                          child: Icon(
-                            Icons.arrow_back,
-                            size: 25.sp,
-                            color: ColorConstants.blackColor,
-                          )),
-                      Center(
-                        child: Text(
-                          "Hello, Ask Me\nAnything...",
-                          style: AppTextStyle().poppinsBoldStyle(),
-                          textAlign: TextAlign.center,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                              onTap: () {
+                                if (mounted && Navigator.canPop(context)) {
+                                  Navigator.of(context).pop(true);
+                                }
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 25.sp,
+                                color: ColorConstants.blackColor,
+                              )),
+                          ElevatedButton(
+                            onPressed: () {
+                              PlaidRefreshService().callPlaidRefreshService(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorConstants.appPrimaryColor,
+                              foregroundColor: ColorConstants.whiteColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.sp),
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
+                            ),
+                            child: Text(
+                              "Refresh Data",
+                              style: AppTextStyle().poppinsLightStyle().copyWith(
+                                    fontSize: 12.sp,
+                                    color: ColorConstants.whiteColor,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
+                      if (isChatEmpty)
+                        Center(
+                          child: Text(
+                            "Hello, Ask Me\nAnything...",
+                            style: AppTextStyle().poppinsBoldStyle(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       // Padding(
                       //   padding: EdgeInsets.symmetric(vertical: 5.h),
                       //   child: Center(

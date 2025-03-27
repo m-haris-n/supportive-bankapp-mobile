@@ -1,7 +1,6 @@
 class ApiUrl {
-  // static const String apiBaseUrl = "https://supportive-bankapp-backend.vercel.app/api/";
-  static const String apiBaseUrl = "http://10.61.138.100:3000/api/";
-  // static const String apiBaseUrl = "https://bank-app-backend-pi.vercel.app/api/";
+  static const String apiBaseUrl = "https://supportive-bankapp-backend.vercel.app/api/";
+  // static const String apiBaseUrl = "http://10.20.10.252:3000/api/";
   static const String register = "auth/register";
   static const String login = "auth/login";
   static const String userMe = "user/me";
@@ -10,6 +9,7 @@ class ApiUrl {
   static const String logout = "logout";
   static const String plaidLinkToken = "plaid/link_token";
   static const String plaidAccessToken = "plaid/access_token";
+  static const String plaidRefresh = "plaid/fetch/refresh";
   static const String getAllChat = "chat/all";
   static const String getChatById = "chat/get";
   static const String createChat = "chat/create";
