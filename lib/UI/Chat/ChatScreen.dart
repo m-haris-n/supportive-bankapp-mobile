@@ -169,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(12.sp),
                                             color: message.senderId != null
-                                                ? ColorConstants.appPrimaryColor
+                                                ? ColorConstants.blackColor
                                                 : ColorConstants.whiteColor,
                                           ),
                                           child: MarkdownBody(
@@ -240,8 +240,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderRadius: 20.sp,
                         cursorColor: ColorConstants.blackColor,
                         filled: true,
-                        filledColor: ColorConstants.textFieldFilledColor,
-                        borderSideColor: ColorConstants.textFieldFilledColor,
+                        filledColor: ColorConstants.whiteColor,
+                        borderSideColor: ColorConstants.blackColor,
                         controller: chatProvider.chatMessageController,
                       )),
                       loadingProvider.isLoading

@@ -85,15 +85,15 @@ class CustomOutlineTextFormField extends StatelessWidget {
         contentPadding: contentPadding ?? EdgeInsets.all(12.sp),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),
-          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.whiteColor, width: 1.sp),
+          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.blackColor, width: 1.sp),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),
-          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.whiteColor, width: 1.sp),
+          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.blackColor, width: 1.sp),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),
-          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.whiteColor, width: 1.sp),
+          borderSide: BorderSide(color: borderSideColor ?? ColorConstants.blackColor, width: 1.sp),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),

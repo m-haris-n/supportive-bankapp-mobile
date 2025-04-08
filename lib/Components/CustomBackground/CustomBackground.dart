@@ -17,14 +17,7 @@ class _CustomBackgroundState extends State<CustomBackground> {
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          tileMode: TileMode.clamp,
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
-            colors:[
-          ColorConstants.appPrimaryColor.withOpacity(0.3),
-          ColorConstants.whiteColor
-        ]),
+        color: ColorConstants.whiteColor,
       ),
       child: widget.widget,
     );

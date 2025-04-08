@@ -7,6 +7,7 @@ import 'package:supportive_app/Providers/AuthProvider/AuthProvider.dart';
 import 'package:supportive_app/Providers/PlaidProvider/PlaidProvider.dart';
 import 'package:supportive_app/Routes/Routes.dart';
 import 'package:supportive_app/Utils/Constant/RouteConstant.dart';
+import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -33,10 +34,17 @@ class _MyAppState extends State<MyApp> {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Supportive',
-            // You can use the library anywhere in the app even in theme
+            title: 'Bankr AI',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primaryColor: ColorConstants.blackColor,
+              scaffoldBackgroundColor: ColorConstants.whiteColor,
+              colorScheme: ColorScheme.light(
+                primary: ColorConstants.blackColor,
+                secondary: ColorConstants.blackColor,
+                surface: ColorConstants.whiteColor,
+                background: ColorConstants.whiteColor,
+                error: ColorConstants.redColor,
+              ),
             ),
             initialRoute: RouteConstant.login,
             onGenerateRoute: RouteGenerator.generateRoute,

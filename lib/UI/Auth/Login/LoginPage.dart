@@ -66,21 +66,29 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Sign in", style: AppTextStyle().poppinsBoldStyle()),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          Column(
                             children: [
-                              Text(
-                                "Access to your\naccount",
-                                style: AppTextStyle().poppinsLightStyle(),
-                              ),
                               Image.asset(
-                                AssetsImages.botImage,
-                                height: 100.h,
+                                "assets/Images/logo.png",
+                                height: 60.h,
                               ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                "Bankr AI",
+                                style: AppTextStyle().poppinsBoldStyle().copyWith(
+                                  fontSize: 24.sp,
+                                ),
+                              ),
+                              SizedBox(height: 24.h),
+                              Text(
+                                "Sign in",
+                                style: AppTextStyle().poppinsBoldStyle().copyWith(
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                              SizedBox(height: 32.h),
                             ],
                           ),
                           CustomOutlineTextFormField(
@@ -96,10 +104,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             filledColor: ColorConstants.whiteColor,
-                            borderSideColor: ColorConstants.whiteColor,
+                            borderSideColor: ColorConstants.blackColor,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
                             child: CustomOutlineTextFormField(
                               hintText: "Password",
                               obscureText: authProvider.showPassword,
@@ -127,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               filledColor: ColorConstants.whiteColor,
-                              borderSideColor: ColorConstants.whiteColor,
+                              borderSideColor: ColorConstants.blackColor,
                             ),
                           ),
                           Align(

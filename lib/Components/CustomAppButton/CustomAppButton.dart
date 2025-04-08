@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supportive_app/Components/TextStyle/TextStyle.dart';
 import 'package:supportive_app/Utils/Constant/ColorConstants.dart';
+import 'package:supportive_app/Utils/Constant/FontConstants.dart';
 
 class CustomAppButton extends StatelessWidget {
   final String? title;
@@ -61,7 +62,7 @@ class CustomAppButton extends StatelessWidget {
                       AppTextStyle().poppinsBoldStyle().copyWith(
                           fontSize: fontSize?? 14.sp,
               fontWeight: fontWeight?? FontWeight.w500,
-              fontFamily: fontFamily??poppinsBold,
+              fontFamily: fontFamily??FontConstants.poppinsBold,
               color: textColor??ColorConstants.whiteColor
             ),
           ):textWidget!,
@@ -70,7 +71,6 @@ class CustomAppButton extends StatelessWidget {
           ),
         ],
       ),
-
     );
   }
 }

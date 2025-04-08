@@ -60,6 +60,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     hintText: "Enter your email",
                     filled: true,
                     filledColor: ColorConstants.whiteColor,
+                    borderSideColor: ColorConstants.blackColor,
                   ),
                 ),
                 CustomAppButton(
